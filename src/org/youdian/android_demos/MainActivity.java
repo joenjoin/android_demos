@@ -1,5 +1,10 @@
 package org.youdian.android_demos;
 
+import java.util.List;
+
+import org.youdian.android_demos.json.JsonParsers.Parser;
+import org.youdian.android_demos.json.Person;
+
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBar;
 import android.support.v4.app.Fragment;
@@ -11,6 +16,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.os.Build;
 
+import org.youdian.android_demos.json.JsonParsers;;
+
 public class MainActivity extends ActionBarActivity {
 
 	@Override
@@ -18,12 +25,23 @@ public class MainActivity extends ActionBarActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 
-		if (savedInstanceState == null) {
-			getSupportFragmentManager().beginTransaction()
-					.add(R.id.container, new PlaceholderFragment()).commit();
-		}
 	}
 
+	public void clicked(View v){
+		switch(v.getId()){
+		case R.id.btn1:
+			List<Person> list=JsonParsers.buildList();
+			Parser<Person> parser=new JsonParsers.NormalParser();
+			try {
+				String json=parser.serialize(list);
+				System.out.println(json);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+		}
+	}
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 
@@ -44,21 +62,5 @@ public class MainActivity extends ActionBarActivity {
 		return super.onOptionsItemSelected(item);
 	}
 
-	/**
-	 * A placeholder fragment containing a simple view.
-	 */
-	public static class PlaceholderFragment extends Fragment {
-
-		public PlaceholderFragment() {
-		}
-
-		@Override
-		public View onCreateView(LayoutInflater inflater, ViewGroup container,
-				Bundle savedInstanceState) {
-			View rootView = inflater.inflate(R.layout.fragment_main, container,
-					false);
-			return rootView;
-		}
-	}
 
 }

@@ -4,6 +4,13 @@ public class Person {
 	private int id;
 	private String name;
 	private int age;
+	private String address;
+	public String getAddress() {
+		return address;
+	}
+	public void setAddress(String address) {
+		this.address = address;
+	}
 	public int getId() {
 		return id;
 	}

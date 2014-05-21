@@ -32,7 +32,7 @@ import org.xmlpull.v1.XmlSerializer;
 import android.util.Log;
 import android.util.Xml;
 
-public class Parsers {
+public class XmlParsers {
 	private static final String TAG="XMLParser";
 	
 	public interface Parser<T>{
@@ -41,7 +41,7 @@ public class Parsers {
 		
  	}
 	
-	public class SAXParser implements Parser<Person>{
+	public static class SAXParser implements Parser<Person>{
 
 		@Override
 		public List<Person> parse(InputStream xml) throws Exception {
@@ -143,7 +143,7 @@ public class Parsers {
 		
 	}
 	
-	public class DOMParser implements Parser<Person>{
+	public static class DOMParser implements Parser<Person>{
 
 		@Override
 		public List<Person> parse(InputStream xml) throws Exception {
@@ -210,7 +210,7 @@ public class Parsers {
 		
 	}
 	
-	public class PullParser implements Parser<Person>{
+	public static class PullParser implements Parser<Person>{
 
 		@Override
 		public List<Person> parse(InputStream xml) throws Exception {
