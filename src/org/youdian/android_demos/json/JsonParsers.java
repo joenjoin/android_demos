@@ -1,6 +1,7 @@
 package org.youdian.android_demos.json;
 
 import java.io.InputStream;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -9,11 +10,16 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import org.json.JSONStringer;
 import org.json.JSONTokener;
+
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 /*
  * Json格式规范 RFC4627
  * Json 格式创建和解析，有两种方式
  * 1.系统类库 org.json.*;
  * 2.使用google的gson库
+ * 
+ * 两种解析方式的区别，当有多个对象时，gson直接生成[]字符串,而不是{"persons":[]}
  */
 public class JsonParsers {
 	
@@ -109,6 +115,28 @@ public class JsonParsers {
 			jsonText.endObject();
 			return jsonText.toString();
 			
+		}
+		
+	}
+	
+	public static class GsonParser implements Parser<Person>{
+
+		@Override
+		public List<Person> parse(String json) throws Exception {
+			// TODO Auto-generated method stub
+			Gson gson=new Gson();
+			Type listType=new TypeToken<List<Person>>(){}.getType();
+			List<Person> list=gson.fromJson(json,listType);
+			return list;
+		}
+
+		@Override
+		public String serialize(List<Person> list) throws Exception {
+			// TODO Auto-generated method stub
+			Gson gson=new Gson();
+			Type listType=new TypeToken<List<Person>>(){}.getType();
+			String json=gson.toJson(list,listType);
+			return json;
 		}
 		
 	}

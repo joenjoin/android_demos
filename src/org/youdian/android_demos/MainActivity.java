@@ -30,15 +30,7 @@ public class MainActivity extends ActionBarActivity {
 	public void clicked(View v){
 		switch(v.getId()){
 		case R.id.btn1:
-			List<Person> list=JsonParsers.buildList();
-			Parser<Person> parser=new JsonParsers.NormalParser();
-			try {
-				String json=parser.serialize(list);
-				System.out.println(json);
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			break;
 			
 		}
 	}

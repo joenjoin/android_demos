@@ -6,7 +6,7 @@ import java.util.List;
 
 import org.youdian.android_demos.MainActivity;
 import org.youdian.android_demos.json.JsonParsers;
-import org.youdian.android_demos.json.JsonParsers.Parser;
+import org.youdian.android_demos.json.JsonParsers.GsonParser;
 import org.youdian.android_demos.json.Person;
 
 import android.test.ActivityInstrumentationTestCase2;
@@ -16,6 +16,10 @@ public class JsonTest extends ActivityInstrumentationTestCase2<MainActivity> {
 			"\"age\":23,\"address\":{\"country\":\"china\",\"province\":\"shanghai\"}}," +
 			"{\"phone\":[1332134,4432123],\"name\":\"xiao guang\",\"age\":24,\"address\":" +
 			"{\"country\":\"zhongguo\",\"province\":\"beijing\"}}]}";
+	public static String jsonForGson="[{\"phone\":[135623333,44556545],\"name\":\"xiao ming\"," +
+			"\"age\":23,\"address\":{\"country\":\"china\",\"province\":\"shanghai\"}}," +
+			"{\"phone\":[1332134,4432123],\"name\":\"xiao guang\",\"age\":24,\"address\":" +
+			"{\"country\":\"zhongguo\",\"province\":\"beijing\"}}]";
 	public  static List<Person> buildList(){
 		List<Person> list=new ArrayList<Person>();
 		Person p=new Person();
@@ -51,7 +55,7 @@ public class JsonTest extends ActivityInstrumentationTestCase2<MainActivity> {
 		super.setUp();
 		mActivity=getActivity();
 	}
-	public void testNormalJson(){
+	public void testNormalJsonSerializer(){
 		JsonParsers.NormalParser parser=new JsonParsers.NormalParser();
 		List<Person> list=buildList();
 		try {
@@ -68,6 +72,32 @@ public class JsonTest extends ActivityInstrumentationTestCase2<MainActivity> {
 		JsonParsers.NormalParser parser=new JsonParsers.NormalParser();
 		try {
 			List<Person> list=parser.parse(json);
+			for(Person p:list){
+				System.out.println(p);
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	public void testGsonSerializer(){
+		JsonParsers.GsonParser parser=new GsonParser();
+		List<Person> list=buildList();
+		try {
+			String json=parser.serialize(list);
+			System.out.println(json);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	public void testGsonParser(){
+		JsonParsers.GsonParser parser=new GsonParser();
+		try {
+			List<Person> list=parser.parse(jsonForGson);
+			assertNotNull(list);
 			for(Person p:list){
 				System.out.println(p);
 			}
