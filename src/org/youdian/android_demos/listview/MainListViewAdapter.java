@@ -62,7 +62,7 @@ public class MainListViewAdapter extends BaseAdapter {
 		mStatus.put(position, checked);
 	}
 	@Override
-	public View getView(final int position, View convertView, ViewGroup parent) {
+	public View getView(int position, View convertView, ViewGroup parent) {
 		// TODO Auto-generated method stub
 		ViewHolder holder=null;
 		if(convertView==null){
@@ -86,11 +86,20 @@ public class MainListViewAdapter extends BaseAdapter {
 			}
 		});
 		if(showCheckBox){
-			
+			holder.check.setTag(position);
 			holder.check.setVisibility(View.VISIBLE);
 			boolean checked=mStatus.get(position);
-			Log.d(TAG, "position "+position+"  "+String.valueOf(checked));
 			holder.check.setChecked(checked);
+			holder.check.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+				
+				@Override
+				public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+					// TODO Auto-generated method stub
+					int position=(int) buttonView.getTag();
+					mStatus.put(position, isChecked);
+					Log.d(TAG, "position "+position+" "+isChecked);
+				}
+			});
 				
 		}else{
 			holder.check.setVisibility(View.INVISIBLE);

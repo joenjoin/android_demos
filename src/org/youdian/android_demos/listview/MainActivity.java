@@ -47,7 +47,6 @@ public class MainActivity extends ActionBarActivity{
 					int position, long id) {
 				// TODO Auto-generated method stub
 				if(mAdapter.isShowCheckBox()){
-					System.out.println("added "+position);
 					mAdapter.setChecked(position, true);
 				}
 			}
