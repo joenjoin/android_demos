@@ -18,48 +18,52 @@ import org.json.JSONTokener;
 public class JsonParsers {
 	
 
-	public  static List<Person> buildList(){
-		List<Person> list=new ArrayList<Person>();
-		Person p=new Person();
-		p.setName("xiao ming");
-		p.setAge(23);
-		long[] l={135623333,44556545};
-		p.setPhone(l);
-		HashMap<String,String> address=new HashMap<String,String>();
-		address.put("country", "china");
-		address.put("province", "shanghai");
-		p.setAddress(address);
-		list.add(p);
-		p=new Person();
-		p.setName("xiao guang");
-		p.setAge(23);
-		long[] l1={1332134,4432123};
-		p.setPhone(l1);
-		address=new HashMap<String,String>();
-		address.put("country", "zhongguo");
-		address.put("province", "beijing");
-		p.setAddress(address);
-		list.add(p);
-		return list;
-	}
 	public interface Parser<T>{
 		
-		public List<T> parse(InputStream xml) throws Exception;
+		public List<T> parse(String json) throws Exception;
 		public String serialize(List<T> list) throws Exception;
 	}
 	
 	public static class NormalParser implements Parser<Person>{
 
 		@Override
-		public List<Person> parse(InputStream xml) throws Exception {
+		public List<Person> parse(String json) throws Exception {
 			// TODO Auto-generated method stub
-			return null;
+			List<Person> list=new ArrayList<Person>();
+			JSONTokener tokener=new JSONTokener(json);
+			JSONObject personsObject=(JSONObject) tokener.nextValue();
+			JSONArray  persons=personsObject.getJSONArray("persons");
+			for(int i=0;i<persons.length();i++){
+				JSONObject person=(JSONObject) persons.opt(i);
+				Person p=new Person();
+				String name=person.getString("name");
+				p.setName(name);
+				int age=person.getInt("age");
+				p.setAge(age);
+				JSONArray phones=person.getJSONArray("phone");
+				long[] phone=new long[2];
+				phone[0]=phones.getLong(0);
+				phone[1]=phones.getLong(1);
+				p.setPhone(phone);
+				JSONObject addresses=person.getJSONObject("address");
+				HashMap<String,String> address=new HashMap<String,String>();
+				String country=addresses.optString("country");
+				String province=addresses.optString("province");
+				address.put("country", country);
+				address.put("province", province);
+				p.setAddress(address);
+				list.add(p);
+				
+			}
+			return list;
 		}
 
 		@Override
 		public String serialize(List<Person> list) throws Exception {
 			// TODO Auto-generated method stub
+			
 			JSONObject persons=new JSONObject();
+			JSONArray array=new JSONArray();
 			for(Person p:list){
 				JSONObject person=new JSONObject();
 				JSONArray phone=new JSONArray();
@@ -71,15 +75,17 @@ public class JsonParsers {
 				address.put("country", p.getAddress().get("country"));
 				address.put("province", p.getAddress().get("province"));
 				person.put("address", address);
-				persons.put("person", person);
+				array.put(person);
 			}
-			
+			persons.put("persons", array);
 			return persons.toString(2);
 		}
 		
 		public String serialize2(List<Person> list) throws Exception{
 			JSONStringer jsonText=new JSONStringer();
 			jsonText.object();
+			jsonText.key("persons");
+			jsonText.array();
 			for(Person p:list){
 				jsonText.object();
 				jsonText.key("phone");
@@ -99,6 +105,7 @@ public class JsonParsers {
 				jsonText.endObject();
 				jsonText.endObject();
 			}
+			jsonText.endArray();
 			jsonText.endObject();
 			return jsonText.toString();
 			

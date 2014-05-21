@@ -31,7 +31,13 @@ import org.xmlpull.v1.XmlSerializer;
 
 import android.util.Log;
 import android.util.Xml;
-
+/*
+ * 三种解析方式的优缺点
+ * 1.SAX 逐行读取，节省内存，适用于固定格式的XML 效率高
+ * 2.DOM 整体载入，消耗内存，适用于需要动态修改的XML 效率低
+ * 3.Pull 逐行读取  效率高
+ * 
+ */
 public class XmlParsers {
 	private static final String TAG="XMLParser";
 	

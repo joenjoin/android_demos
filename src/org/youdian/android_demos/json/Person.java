@@ -33,4 +33,12 @@ public class Person {
 	public void setAddress(HashMap<String, String> address) {
 		this.address = address;
 	}
+	@Override
+	public String toString() {
+		// TODO Auto-generated method stub
+		String s="name="+getName()+",age="+getAge()+",phone="+getPhone()[0]+" "+getPhone()[1]+",address="+getAddress();
+		return s;
+	}
+	
+	
 }
