@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import org.youdian.android_demos.R;
 
 import android.os.Bundle;
-import android.os.Environment;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -36,8 +35,21 @@ public class MainActivity extends ActionBarActivity{
 					int position, long id) {
 				// TODO Auto-generated method stub
 				mAdapter.setShowCheckBox(true);
-				mList.invalidate();
+				mAdapter.notifyDataSetChanged();
 				return true;
+			}
+		});
+		
+		mList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view,
+					int position, long id) {
+				// TODO Auto-generated method stub
+				if(mAdapter.isShowCheckBox()){
+					System.out.println("added "+position);
+					mAdapter.setChecked(position, true);
+				}
 			}
 		});
 	}

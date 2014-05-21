@@ -7,6 +7,8 @@ import java.util.List;
 import org.youdian.android_demos.R;
 
 import android.content.Context;
+import android.util.Log;
+import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,9 +21,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 public class MainListViewAdapter extends BaseAdapter {
-	
+	private static final String TAG="MainListViewAdapter";
 	ArrayList<String> mData;
-	HashMap<Integer,Boolean> mStatus;
+	SparseBooleanArray mStatus;
 	Context mContext;
 	private boolean showCheckBox=false;
 	public boolean isShowCheckBox() {
@@ -37,7 +39,7 @@ public class MainListViewAdapter extends BaseAdapter {
 	public MainListViewAdapter(Context context,ArrayList<String> mData){
 		this.mContext=context;
 		this.mData=mData;
-		mStatus=new HashMap<Integer,Boolean>();
+		mStatus=new SparseBooleanArray(30);
 	}
 	@Override
 	public int getCount() {
@@ -86,22 +88,14 @@ public class MainListViewAdapter extends BaseAdapter {
 		if(showCheckBox){
 			
 			holder.check.setVisibility(View.VISIBLE);
-			Boolean checked=mStatus.get(position);
-			if(checked!=null)
-				holder.check.setChecked(checked);
-			else
-				holder.check.setChecked(false);
+			boolean checked=mStatus.get(position);
+			Log.d(TAG, "position "+position+"  "+String.valueOf(checked));
+			holder.check.setChecked(checked);
+				
 		}else{
 			holder.check.setVisibility(View.INVISIBLE);
 		}
-		holder.check.setOnCheckedChangeListener(new OnCheckedChangeListener() {
-			
-			@Override
-			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-				// TODO Auto-generated method stub
-				mStatus.put(position, isChecked);
-			}
-		});
+
 		return convertView;
 	}
 	class ViewHolder{
