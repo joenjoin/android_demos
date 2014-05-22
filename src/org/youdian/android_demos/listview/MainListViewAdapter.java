@@ -1,8 +1,6 @@
 package org.youdian.android_demos.listview;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 
 import org.youdian.android_demos.R;
 
@@ -16,7 +14,6 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
-import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -77,12 +74,14 @@ public class MainListViewAdapter extends BaseAdapter {
 			holder=(ViewHolder) convertView.getTag();
 		}
 		holder.name.setText(mData.get(position));
+		holder.btn.setTag(position);
 		holder.btn.setOnClickListener(new View.OnClickListener() {
 			
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				Toast.makeText(mContext, " button clicked", Toast.LENGTH_SHORT).show();
+				int position=(int) v.getTag();
+				Toast.makeText(mContext, " button "+position+" clicked", Toast.LENGTH_SHORT).show();
 			}
 		});
 		if(showCheckBox){

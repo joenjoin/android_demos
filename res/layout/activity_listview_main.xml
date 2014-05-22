@@ -12,6 +12,7 @@
        android:overScrollMode="always"
        android:overScrollHeader="#ffaaaa"       
        android:splitMotionEvents="true"
+       android:stackFromBottom="true"
        />
 
 </LinearLayout>
