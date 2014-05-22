@@ -1,6 +1,8 @@
 package org.youdian.android_demos.listview;
 
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
 
 import org.youdian.android_demos.R;
 
@@ -21,6 +23,7 @@ public class MainListViewAdapter extends BaseAdapter {
 	private static final String TAG="MainListViewAdapter";
 	ArrayList<String> mData;
 	SparseBooleanArray mStatus;
+	HashSet<Integer> mSelectedItems=null;
 	Context mContext;
 	private boolean showCheckBox=false;
 	public boolean isShowCheckBox() {
@@ -37,6 +40,7 @@ public class MainListViewAdapter extends BaseAdapter {
 		this.mContext=context;
 		this.mData=mData;
 		mStatus=new SparseBooleanArray(30);
+		mSelectedItems=new HashSet<Integer>();
 	}
 	@Override
 	public int getCount() {
@@ -49,7 +53,9 @@ public class MainListViewAdapter extends BaseAdapter {
 		// TODO Auto-generated method stub
 		return mData.get(position);
 	}
-
+	public HashSet<Integer> getSelectedItems(){
+		return mSelectedItems;
+	}
 	@Override
 	public long getItemId(int position) {
 		// TODO Auto-generated method stub
@@ -57,6 +63,13 @@ public class MainListViewAdapter extends BaseAdapter {
 	}
 	public void setChecked(int position,boolean checked){
 		mStatus.put(position, checked);
+		if(checked){
+			mSelectedItems.add(position);
+			Log.d(TAG, position+"  selected");
+		}else{
+			mSelectedItems.remove(Integer.valueOf(position));
+			Log.d(TAG, position+"  removed");
+		}
 	}
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
@@ -96,7 +109,13 @@ public class MainListViewAdapter extends BaseAdapter {
 					// TODO Auto-generated method stub
 					int position=(int) buttonView.getTag();
 					mStatus.put(position, isChecked);
-					Log.d(TAG, "position "+position+" "+isChecked);
+					if(isChecked){
+						mSelectedItems.add(position);
+						Log.d(TAG, position+"  selected");
+					}else{
+						mSelectedItems.remove(Integer.valueOf(position));
+						Log.d(TAG, position+"  removed");
+					}
 				}
 			});
 				

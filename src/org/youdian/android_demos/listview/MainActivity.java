@@ -1,6 +1,8 @@
 package org.youdian.android_demos.listview;
 
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
 
 import org.youdian.android_demos.R;
 import org.youdian.android_demos.listview.MainListViewAdapter.ViewHolder;
@@ -12,6 +14,7 @@ import android.support.v7.view.ActionMode.Callback;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -44,6 +47,9 @@ public class MainActivity extends ActionBarActivity{
 				if(!mAdapter.isShowCheckBox()){
 					mAdapter.setShowCheckBox(true);
 					mAdapter.notifyDataSetChanged();
+					ViewHolder holder=(ViewHolder) view.getTag();
+					holder.check.toggle();
+					//mAdapter.setChecked(position, holder.check.isChecked());
 					mActionMode=MainActivity.this.startSupportActionMode(mCallBack);
 				}
 				
@@ -60,7 +66,7 @@ public class MainActivity extends ActionBarActivity{
 				if(mAdapter.isShowCheckBox()){
 					ViewHolder holder=(ViewHolder) view.getTag();
 					holder.check.toggle();
-					mAdapter.setChecked(position, holder.check.isChecked());
+					//mAdapter.setChecked(position, holder.check.isChecked());
 				}else{
 					Toast.makeText(MainActivity.this, "you clicked"+position, Toast.LENGTH_SHORT).show();
 				}
@@ -80,18 +86,33 @@ public class MainActivity extends ActionBarActivity{
 		@Override
 		public void onDestroyActionMode(ActionMode mode) {
 			// TODO Auto-generated method stub
-			
+			mActionMode=null;
 		}
 		
 		@Override
 		public boolean onCreateActionMode(ActionMode mode, Menu menu) {
 			// TODO Auto-generated method stub
-			return false;
+			MenuInflater inflater=MainActivity.this.getMenuInflater();
+			inflater.inflate(R.menu.listview_multichoice, menu);
+			return true;
 		}
 		
 		@Override
-		public boolean onActionItemClicked(ActionMode mdoe, MenuItem item) {
+		public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
 			// TODO Auto-generated method stub
+			int id=item.getItemId();
+			if(id==R.id.delete){
+				HashSet<Integer> mSelectedItems=mAdapter.getSelectedItems();
+				StringBuilder builder=new StringBuilder("selected items: ");
+				for(Integer i:mSelectedItems){
+					builder.append(i+" ");
+				}
+				System.out.println(builder.toString());
+				mode.finish();
+				mAdapter.setShowCheckBox(false);
+				mAdapter.notifyDataSetChanged();
+				return true;
+			}
 			return false;
 		}
 	};

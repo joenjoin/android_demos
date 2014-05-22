@@ -2,7 +2,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android" >
     <item 
         android:id="@+id/text"
-        android:title=""
+        android:title="selected"
         android:actionLayout="@layout/listview_action_view_text"
         />
 	<item 
