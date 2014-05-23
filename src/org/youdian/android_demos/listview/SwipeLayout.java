@@ -5,9 +5,9 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.widget.LinearLayout;
 
-public class TouchableLinearLayout extends LinearLayout{
+public class SwipeLayout extends LinearLayout{
 
-	public TouchableLinearLayout(Context context, AttributeSet attrs) {
+	public SwipeLayout(Context context, AttributeSet attrs) {
 		super(context, attrs);
 		// TODO Auto-generated constructor stub
 	}
