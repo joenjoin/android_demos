@@ -1,6 +1,5 @@
 package org.youdian.android_demos.json;
 
-import java.io.InputStream;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -19,7 +18,7 @@ import com.google.gson.reflect.TypeToken;
  * 1.系统类库 org.json.*;
  * 2.使用google的gson库
  * 
- * 两种解析方式的区别，当有多个对象时，gson直接生成[]字符串,而不是{"persons":[]}
+ * 两种解析方式的区别，当有多个对象时，gson自动生成的是json数组
  */
 public class JsonParsers {
 	
@@ -29,7 +28,9 @@ public class JsonParsers {
 		public List<T> parse(String json) throws Exception;
 		public String serialize(List<T> list) throws Exception;
 	}
-	
+	/*
+	 * 使用org.json 类解析和序列化
+	 */
 	public static class NormalParser implements Parser<Person>{
 
 		@Override
@@ -119,6 +120,9 @@ public class JsonParsers {
 		
 	}
 	
+	/*
+	 * 使用google的gson类库解析和序列化
+	 */
 	public static class GsonParser implements Parser<Person>{
 
 		@Override

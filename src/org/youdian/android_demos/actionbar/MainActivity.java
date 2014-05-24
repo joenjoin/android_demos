@@ -1,11 +1,10 @@
-package org.youdian.android_demos.xml;
+package org.youdian.android_demos.actionbar;
 
-import android.app.Activity;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 
+public class MainActivity extends ActionBarActivity {
 
-public class XmlParserActivity extends Activity {
-	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -13,4 +12,5 @@ public class XmlParserActivity extends Activity {
 	}
 	
 	
+
 }

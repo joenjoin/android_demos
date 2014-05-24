@@ -10,6 +10,10 @@ import android.view.View;
 import android.view.ViewConfiguration;
 import android.widget.ListView;
 
+/*
+ * 滑动删除Item
+ * 
+ */
 public class SwipeableListView extends ListView implements Callback {
 	
 	private SwipeHelper mSwipeHelper;

@@ -2,6 +2,7 @@
 <org.youdian.android_demos.listview.SwipeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:focusable="true"
     android:orientation="horizontal" >
     <TextView 
         android:id="@+id/name"
@@ -12,5 +13,6 @@
      android:id="@+id/onoff"
      android:layout_width="wrap_content"
      android:layout_height="wrap_content"
+     android:focusable="true"
      />
 </org.youdian.android_demos.listview.SwipeLayout>
