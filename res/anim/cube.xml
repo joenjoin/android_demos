@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<cube 
+    xmlns:android="http://schemas.android.com/apk/res/android" 
+       xmlns:cs="http://schemas.android.com/apk/res/org.youdian.android_demos"
+    android:duration="2000"
+    android:repeatCount="5"
+    cs:fromDegree="0"
+    cs:toDegree="1440"
+    cs:fromX="50"
+    cs:toX="90%p"
+    cs:axisY="0.5"
+    cs:positive="true"/>

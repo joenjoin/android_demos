@@ -1,0 +1,11 @@
+<!-- 有些类型其实是没必要的，只是实例代码，为了更具有代表性 -->
+<resources >
+     <declare-styleable name="CubeAnimation">
+         <attr name="fromX" format="dimension|fraction|float"/> 
+         <attr name="toX" format="dimension|fraction|float"/> 
+         <attr name="fromDegree" format="float"/> 
+         <attr name="toDegree" format="float"/> 
+         <attr name="axisY" format="float|integer"/> 
+         <attr name="positive" format="boolean"/> 
+     </declare-styleable>
+ </resources>

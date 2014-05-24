@@ -17,7 +17,7 @@ import android.widget.ListView;
 public class SwipeableListView extends ListView implements Callback {
 	
 	private SwipeHelper mSwipeHelper;
-	private boolean mEnableSwipe=false;
+	private boolean mEnableSwipe=true;
 	private OnItemSwipeListener mOnItemSwipeListener;
 	public SwipeableListView(Context context, AttributeSet attrs) {
 		this(context, attrs,-1);
