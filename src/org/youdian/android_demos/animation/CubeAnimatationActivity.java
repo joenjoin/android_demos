@@ -9,7 +9,7 @@ import android.view.View.OnClickListener;
 import android.view.animation.Animation;
 import android.widget.TextView;
 
-public class AnimateActivity extends Activity {
+public class CubeAnimatationActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

@@ -11,7 +11,7 @@
             android:tag="list"
             />
 
-    <org.youdian.android_demos.animation.YoutubeLayout
+    <org.youdian.android_demos.animation.YoutubeDragLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:id="@+id/youtubeLayout"
@@ -26,7 +26,7 @@
                 android:textSize="25sp"
                 android:tag="text"
                 android:gravity="center"
-                android:text="create by wuyexiong"
+                android:text="  Handle  "
                 android:textColor="@android:color/white"
                 android:background="#AD78CC"/>
 

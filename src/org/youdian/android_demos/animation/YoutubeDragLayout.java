@@ -12,7 +12,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 
-public class YoutubeLayout extends ViewGroup{
+public class YoutubeDragLayout extends ViewGroup{
 
     private static final String TAG = "YoutubeLayout";
 
@@ -32,17 +32,17 @@ public class YoutubeLayout extends ViewGroup{
 
 
 
-    public YoutubeLayout(Context context) {
+    public YoutubeDragLayout(Context context) {
         super(context);
         init(context);
     }
 
-    public YoutubeLayout(Context context, AttributeSet attrs) {
+    public YoutubeDragLayout(Context context, AttributeSet attrs) {
         super(context, attrs);
         init(context);
     }
 
-    public YoutubeLayout(Context context, AttributeSet attrs, int defStyle) {
+    public YoutubeDragLayout(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
         init(context);
     }
