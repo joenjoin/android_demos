@@ -41,5 +41,5 @@
                 android:layout_height="match_parent"
                 android:background="#FF00FF"/>
 
-    </org.youdian.android_demos.animation.YoutubeLayout>
+    </org.youdian.android_demos.animation.YoutubeDragLayout>
 </FrameLayout>
