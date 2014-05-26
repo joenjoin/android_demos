@@ -10,7 +10,9 @@ import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.text.NoCopySpan.Concrete;
+import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -27,6 +29,23 @@ public class SwipeableActivity extends Activity{
 		mAdapter=new MyAdapter(this);
 		mList=(SwipeableListView)findViewById(R.id.list);
 		mList.setAdapter(mAdapter);
+		mList.enableSwipe(true);
+		mList.setOnItemSwipeListener(new SwipeableListView.OnItemSwipeListener() {
+			
+			@Override
+			public void onSwipe(View view) {
+				// TODO Auto-generated method stub
+				Log.d("SwipelableListView", "view swiped");
+			}
+		});
+		mList.setOnTouchListener(new View.OnTouchListener() {
+			
+			@Override
+			public boolean onTouch(View v, MotionEvent event) {
+				// TODO Auto-generated method stub
+				return false;
+			}
+		});
 	}
 	
 	
@@ -63,7 +82,13 @@ public class SwipeableActivity extends Activity{
 			// TODO Auto-generated method stub
 			return position;
 		}
-
+		
+		public void deleteItem(int position){
+			items.remove(position);
+			this.notifyDataSetChanged();
+			Log.d("SwipeableListView", "item "+position+" removed");
+		}
+		
 		@Override
 		public View getView(int position, View convertView, ViewGroup parent) {
 			// TODO Auto-generated method stub

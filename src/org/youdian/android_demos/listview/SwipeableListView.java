@@ -5,6 +5,7 @@ import org.youdian.android_demos.listview.SwipeHelper.Callback;
 import android.content.Context;
 import android.content.res.Configuration;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewConfiguration;
@@ -17,7 +18,7 @@ import android.widget.ListView;
 public class SwipeableListView extends ListView implements Callback {
 	
 	private SwipeHelper mSwipeHelper;
-	private boolean mEnableSwipe=true;
+	private boolean mEnableSwipe=false;
 	private OnItemSwipeListener mOnItemSwipeListener;
 	public SwipeableListView(Context context, AttributeSet attrs) {
 		this(context, attrs,-1);
@@ -56,9 +57,29 @@ public class SwipeableListView extends ListView implements Callback {
 	@Override
 	public void requestLayout() {
 		// TODO Auto-generated method stub
+		checkRequestLayout(this);
 		super.requestLayout();
 	}
-
+	
+	public void checkRequestLayout(View v){
+		boolean inLayout=false;
+		final View root=v.getRootView();
+		if(root == null || v.isLayoutRequested()) {
+			return;
+		}
+		final Error e=new Error();
+		for(StackTraceElement ste : e.getStackTrace()) {
+			if("android.view.ViewGroup".equals(ste.getClassName()) 
+					&& "layout".equals(ste.getMethodName())) {
+				inLayout = true;
+				break;
+			}
+		}
+		if (inLayout && !v.isLayoutRequested()) {
+			Log.d("SwipeableListView", "WARNING: in requestLayout during layout pass, view= "+v);
+		}
+			
+	}
 
 	public void enableSwipe(boolean enable){
 		mEnableSwipe=enable;
