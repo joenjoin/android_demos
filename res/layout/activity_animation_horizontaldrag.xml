@@ -24,6 +24,6 @@
                 android:layout_height="100dip"
                 android:background="#55d322"
                 ></View>
-    </org.youdian.android_demos.animation.DragLayout>
+    </org.youdian.android_demos.animation.HorizontalDragLayout>
 
 </LinearLayout>
