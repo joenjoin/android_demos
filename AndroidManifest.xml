@@ -16,7 +16,7 @@
         android:theme="@style/AppTheme" >
         <uses-library android:name="android.test.runner"/>
         <activity
-            android:name="org.youdian.android_demos.bitmap.ImageSelectActivity"
+            android:name="org.youdian.android_demos.animation.FlipAnimationActivity"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

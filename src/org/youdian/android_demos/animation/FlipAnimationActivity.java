@@ -13,9 +13,11 @@ import android.widget.TextView;
 /*
  * 翻转动画，两个View切换时显示翻转效果
  */
-public class FlipActivity extends Activity {
+public class FlipAnimationActivity extends Activity {
 	
 	TextView view1,view2;
+	private static final int VIEW_IN_DURATION=1000;
+	private static final int VIEW_OUT_DURATION=5000;
 	boolean b=false;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -40,7 +42,7 @@ public class FlipActivity extends Activity {
 	@SuppressLint("NewApi")
 	public Animator startCloseAnimator(View v){
 		final View view=v;
-		Animator anim=ObjectAnimator.ofFloat(v, View.SCALE_X, 1f,0f).setDuration(1000);
+		Animator anim=ObjectAnimator.ofFloat(v, View.SCALE_X, 1f,0f).setDuration(VIEW_OUT_DURATION);
 		anim.addListener(new AnimatorListener(){
 
 			@Override
@@ -76,8 +78,8 @@ public class FlipActivity extends Activity {
 	public Animator startOpenAnimator(View v){
 		final View view=v;
 		
-		Animator anim=ObjectAnimator.ofFloat(v, View.SCALE_X, 0f,1f).setDuration(2000);
-		anim.setStartDelay(1000);
+		Animator anim=ObjectAnimator.ofFloat(v, View.SCALE_X, 0f,1f).setDuration(VIEW_IN_DURATION);
+		anim.setStartDelay(VIEW_OUT_DURATION);
 		anim.addListener(new AnimatorListener(){
 
 			@Override

@@ -11,24 +11,24 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 /** Created by wuyexiong on 13-8-31. */
-public class DragLayout extends LinearLayout{
+public class HorizontalDragLayout extends LinearLayout{
 
-    private static final String TAG = "DragLayout";
+    private static final String TAG = "HorizontalDragLayout";
 
     private ViewDragHelper mDragHelper;
     private View mDragView;
 
-    public DragLayout(Context context) {
+    public HorizontalDragLayout(Context context) {
         super(context);
         init();
     }
 
-    public DragLayout(Context context, AttributeSet attrs) {
+    public HorizontalDragLayout(Context context, AttributeSet attrs) {
         super(context, attrs);
         init();
     }
 
-    public DragLayout(Context context, AttributeSet attrs, int defStyle) {
+    public HorizontalDragLayout(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
     }
 

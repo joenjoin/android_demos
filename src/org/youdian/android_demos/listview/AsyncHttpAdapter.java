@@ -29,7 +29,7 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-public class AsyncAdapter extends BaseAdapter {
+public class AsyncHttpAdapter extends BaseAdapter {
 	
 	private static class Utils {
 		private static String baseUrl="http://sapp-pics.stor.sinaapp.com/";
@@ -47,7 +47,7 @@ public class AsyncAdapter extends BaseAdapter {
 	
 	ArrayList<HashMap<String,String>> mResources=new ArrayList<>();
 	Context mContext;
-	public AsyncAdapter(Context context){
+	public AsyncHttpAdapter(Context context){
 		mContext=context;
 	}
 	public void setResources(ArrayList<HashMap<String,String>> mResources){
