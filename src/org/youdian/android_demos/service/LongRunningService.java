@@ -41,6 +41,7 @@ public class LongRunningService extends Service {
 		// TODO Auto-generated method stub
 		if(binder==null)
 			binder=new MyBinder();
+		Log.d(TAG,"onBind");
 		return binder;
 	}
 
@@ -48,23 +49,29 @@ public class LongRunningService extends Service {
 	public void onCreate() {
 		// TODO Auto-generated method stub
 		super.onCreate();
+		Log.d(TAG,"onCreate");
 	}
 
 	@Override
 	public void onDestroy() {
 		// TODO Auto-generated method stub
+		Log.d(TAG,"onDestroy");
 		super.onDestroy();
+		
 	}
 
 	@Override
 	public int onStartCommand(Intent intent, int flags, int startId) {
 		// TODO Auto-generated method stub
-		return super.onStartCommand(intent, flags, startId);
+		Log.d(TAG,"onStartCommand");
+		Log.d(TAG, ""+Thread.currentThread().getId());
+		return START_STICKY;
 	}
 
 	@Override
 	public boolean onUnbind(Intent intent) {
 		// TODO Auto-generated method stub
+		Log.d(TAG,"onUnbind");
 		return super.onUnbind(intent);
 	}
 	

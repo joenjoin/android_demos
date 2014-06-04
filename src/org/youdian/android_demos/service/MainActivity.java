@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.content.ServiceConnection;
 import android.os.Bundle;
 import android.os.IBinder;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -35,6 +36,7 @@ public class MainActivity extends Activity implements OnClickListener {
 	public void onClick(View view) {
 		// TODO Auto-generated method stub
 		int id=view.getId();
+		Log.d("Activity", ""+Thread.currentThread().getId());
 		Intent intent=new Intent(this,LongRunningService.class);
 		switch(id){
 		case R.id.start:
