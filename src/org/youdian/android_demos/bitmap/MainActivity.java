@@ -5,6 +5,7 @@ import org.youdian.android_demos.R;
 import android.app.Activity;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.view.View;
@@ -22,7 +23,7 @@ public class MainActivity extends Activity {
 	
 	public void onClick(View view){
 		Bitmap src=BitmapFactory.decodeResource(getResources(), R.drawable.profile);
-		Bitmap dst=BitmapUtils.createReflection(src);
+		Bitmap dst=BitmapUtils.createFrameBitmap(src, Color.BLUE);
 		iv.setImageBitmap(dst);
 	}
 	

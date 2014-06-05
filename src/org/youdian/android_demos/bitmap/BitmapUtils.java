@@ -10,6 +10,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 
 import android.graphics.Bitmap;
+import android.graphics.Bitmap.Config;
 import android.graphics.BitmapFactory;
 import android.graphics.BitmapShader;
 import android.graphics.Canvas;
@@ -146,5 +147,25 @@ public class BitmapUtils {
 
 		return dst;
 		
+	}
+	
+	/*
+	 * 为图片添加边框
+	 */
+	
+	public static Bitmap createFrameBitmap(Bitmap src,int color){
+		int frameWidth=5;
+		int srcWidth=src.getWidth();
+		int srcHeight=src.getHeight();
+		Bitmap dst=Bitmap.createBitmap(srcWidth+frameWidth*2, srcHeight+frameWidth*2, Config.ARGB_8888);
+		Canvas canvas=new Canvas(dst);
+		Paint paint=new Paint();
+		paint.setAntiAlias(true);
+		paint.setColor(color);
+		paint.setStrokeWidth(frameWidth);
+		RectF rect=new RectF(0, 0, srcWidth+frameWidth*2, srcHeight+frameWidth*2);
+		canvas.drawRect(rect, paint);
+		canvas.drawBitmap(src, frameWidth, frameWidth, null);
+		return dst;
 	}
 }
