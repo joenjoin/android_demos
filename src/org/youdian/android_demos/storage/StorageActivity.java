@@ -17,7 +17,7 @@ public class StorageActivity extends Activity{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		tv=(TextView)findViewById(R.id.tv);
-		/*  调用了StorageManager的隐藏方法getVolumeList和隐藏类StorageVolume，
+		/*  调用了StorageManager的隐藏方法getVolumeList和隐藏类StorageVolume，需要使用Android.mk生成apk文件
 		StorageManager sm=(StorageManager) getSystemService(Context.STORAGE_SERVICE);
 		StorageVolume[] volumes=sm.getVolumeList();
 		for(StorageVolume volume:volumes){
