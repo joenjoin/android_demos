@@ -6,7 +6,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.os.storage.StorageManager;
-import android.os.storage.StorageVolume;
+//import android.os.storage.StorageVolume;
 import android.widget.TextView;
 
 public class StorageActivity extends Activity{
@@ -17,6 +17,7 @@ public class StorageActivity extends Activity{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		tv=(TextView)findViewById(R.id.tv);
+		/*  调用了StorageManager的隐藏方法getVolumeList和隐藏类StorageVolume，
 		StorageManager sm=(StorageManager) getSystemService(Context.STORAGE_SERVICE);
 		StorageVolume[] volumes=sm.getVolumeList();
 		for(StorageVolume volume:volumes){
@@ -25,6 +26,7 @@ public class StorageActivity extends Activity{
 			tv.append(path+"\n");
 			tv.append(des+"\n");
 		}
+		*/
 	}
 	
 	
