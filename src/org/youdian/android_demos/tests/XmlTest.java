@@ -37,7 +37,7 @@ public class XmlTest extends ActivityInstrumentationTestCase2<MainActivity>{
 		// TODO Auto-generated method stub
 		super.setUp();
 		mActivity=getActivity();
-		button=(Button)mActivity.findViewById(R.id.btn1);
+		//button=(Button)mActivity.findViewById(R.id.btn1);
 		//button.performClick();
 	}
 

@@ -1,5 +1,6 @@
 package org.youdian.android_demos.animation;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.support.v4.view.MotionEventCompat;
 import android.support.v4.widget.ViewDragHelper;
@@ -28,7 +29,8 @@ public class HorizontalDragLayout extends LinearLayout{
         init();
     }
 
-    public HorizontalDragLayout(Context context, AttributeSet attrs, int defStyle) {
+    @SuppressLint("NewApi")
+	public HorizontalDragLayout(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
     }
 

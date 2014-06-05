@@ -6,16 +6,9 @@
     android:orientation="vertical"
     tools:context="org.youdian.android_demos.MainActivity"
     tools:ignore="MergeRootFrame" >
-    <Button 
-        android:id="@+id/btn1"
+    <TextView
+        android:id="@+id/tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:onClick="clicked"
-        android:text="parse"/>
-        <Button 
-        android:id="@+id/btn2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:onClick="clicked"
-        android:text="serialize"/>
+        />
 </LinearLayout>

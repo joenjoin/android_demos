@@ -17,8 +17,6 @@ public class MainActivity extends ActionBarActivity {
 
 	public void clicked(View v){
 		switch(v.getId()){
-		case R.id.btn1:
-			break;
 			
 		}
 	}
