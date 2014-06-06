@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<timezones>
+    <timezone id="Asia/Tehran" weatherID="2254271">Abadan</timezone>
+    <timezone id="Asia/Shanghai" weatherID="2163866">Wuhan</timezone>
+    <timezone id="Asia/Chongqing" weatherID="2142699">Changsha</timezone>
+</timezones>

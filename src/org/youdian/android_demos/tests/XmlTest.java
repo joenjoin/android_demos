@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.youdian.android_demos.MainActivity;
 import org.youdian.android_demos.R;
+import org.youdian.android_demos.xml.XmlFileParser;
 import org.youdian.android_demos.xml.XmlParsers;
 import org.youdian.android_demos.xml.XmlParsers.Parser;
 import org.youdian.android_demos.xml.Person;
@@ -41,7 +42,9 @@ public class XmlTest extends ActivityInstrumentationTestCase2<MainActivity>{
 		//button.performClick();
 	}
 
-
+	public void testXmlResourceParser(){
+		XmlFileParser.parse(mActivity, R.xml.xml_timezone_parse);
+	}
 
 	public void testSAX(){
 		Parser<Person> parser=new XmlParsers.SAXParser();
