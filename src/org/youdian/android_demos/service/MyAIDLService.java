@@ -22,10 +22,14 @@ public class MyAIDLService extends Service {
 	@Override
 	public int onStartCommand(Intent intent, int flags, int startId) {
 		// TODO Auto-generated method stub
+		if(intent==null)
+			Log.d(TAG, "intent is null");
+		else
+			Log.d(TAG, "intent="+intent.getAction());
 		int i=0;
-		while(i++<10e5){
+		while(i++<10){
 			Log.d(TAG, "onStartCommand()");
-			Log.d(TAG, Thread.currentThread().getId()+"");
+			//Log.d(TAG, Thread.currentThread().getId()+"");
 			
 		}
 		return START_NOT_STICKY;

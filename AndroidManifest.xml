@@ -30,7 +30,15 @@
             android:name="org.youdian.android_demos.service.MyAIDLService"
             android:process="org.youdian.android_demos.service.xiaoming"
             android:exported="true"
-            ></service>
+            />
+        <service 
+            android:name="org.youdian.android_demos.service.LongRunningService"
+            />
+        <provider 
+            android:name="org.youdian.android_demos.contentprovider.DetailsContentProvider"
+            android:authorities="org.youdian.detailedlist.provider"
+            android:exported="false"
+            ></provider>
     </application>
 
 </manifest>
