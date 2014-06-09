@@ -8,6 +8,8 @@
         android:minSdkVersion="8"
         android:targetSdkVersion="19" />
     <instrumentation android:name="android.test.InstrumentationTestRunner" android:targetPackage="org.youdian.android_demos"></instrumentation>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.INTERNET"/>
 	
     <application
         android:allowBackup="true"
@@ -16,7 +18,7 @@
         android:theme="@style/AppTheme" >
         <uses-library android:name="android.test.runner"/>
         <activity
-            android:name="org.youdian.android_demos.animation.FlipAnimationActivity"
+            android:name="org.youdian.android_demos.service.AIDLClientActivity"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -24,6 +26,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <service 
+            android:name="org.youdian.android_demos.service.MyAIDLService"
+            android:process="org.youdian.android_demos.service.xiaoming"
+            android:exported="true"
+            ></service>
     </application>
 
 </manifest>
