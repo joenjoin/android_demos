@@ -23,6 +23,8 @@ import org.apache.http.HttpStatus;
 import org.apache.http.client.CookieStore;
 import org.apache.http.cookie.Cookie;
 
+import android.webkit.CookieManager;
+
 public class HttpUtils {
 	/*
 	 * 把普通中文字符串转换成 application/x-www-form-urlencoded 字符串
@@ -46,6 +48,10 @@ public class HttpUtils {
 		OutputStream out=null;
 		HttpURLConnection conn=null;
 		InputStream in=null;
+		CookieManager cm=CookieManager.getInstance();
+		CookieStore  cs=new LocalCookieStore();
+		
+		
 		try {
 			conn=(HttpURLConnection) new URL(url).openConnection();
 			conn.setChunkedStreamingMode(0);
@@ -100,9 +106,9 @@ public class HttpUtils {
 		
 	}
 	
-	private List<Cookie> cookies=new ArrayList<Cookie>();
+	private static List<Cookie> cookies=new ArrayList<Cookie>();
 	
-	private class LocalCookieStore  implements CookieStore{
+	private static class LocalCookieStore  implements CookieStore{
 
 		@Override
 		public void addCookie(Cookie cookie) {
@@ -135,7 +141,7 @@ public class HttpUtils {
 		@Override
 		public List<Cookie> getCookies() {
 			// TODO Auto-generated method stub
-			return null;
+			return cookies;
 		}
 		
 	}
