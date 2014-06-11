@@ -8,24 +8,37 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
+import java.net.CookieHandler;
+import java.net.CookieManager;
+import java.net.CookiePolicy;
+import java.net.HttpCookie;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
+import java.net.URI;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
-import org.apache.http.client.CookieStore;
+
+import java.net.CookieStore;
+
 import org.apache.http.cookie.Cookie;
 
-import android.webkit.CookieManager;
+import android.annotation.SuppressLint;
+import android.util.Log;
 
 public class HttpUtils {
+	
+	private static final String TAG="HttpUtils";
 	/*
 	 * 把普通中文字符串转换成 application/x-www-form-urlencoded 字符串
 	 */
@@ -43,13 +56,14 @@ public class HttpUtils {
 		return newUrl;
 	}
 	
+	@SuppressLint("NewApi")
 	public static boolean uploadFile(String url,File file){
 		boolean result=false;
 		OutputStream out=null;
 		HttpURLConnection conn=null;
 		InputStream in=null;
-		CookieManager cm=CookieManager.getInstance();
-		CookieStore  cs=new LocalCookieStore();
+		initCookieStore();
+
 		
 		
 		try {
@@ -86,6 +100,30 @@ public class HttpUtils {
 		}
 		return result;
 	}
+	public static InputStream get(String url){
+		initCookieStore();
+		HttpURLConnection conn=null;
+		InputStream in=null;
+		try {
+			conn=(HttpURLConnection) new URL(url).openConnection();
+			in=conn.getInputStream();
+		} catch (MalformedURLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return in;
+	}
+	
+	@SuppressLint("NewApi")
+	private static void initCookieStore() {
+		CookieStore store = new MyCookieStore();
+		CookiePolicy policy = new LocalCookiePolicy();
+		CookieManager handler = new CookieManager(store, policy);
+		CookieHandler.setDefault(handler);
+	}
 	private static void writeStream(OutputStream out,File file){
 		InputStream in;
 		try {
@@ -107,43 +145,66 @@ public class HttpUtils {
 	}
 	
 	private static List<Cookie> cookies=new ArrayList<Cookie>();
-	
-	private static class LocalCookieStore  implements CookieStore{
+	@SuppressLint("NewApi")
+	private static class LocalCookiePolicy implements CookiePolicy{
 
 		@Override
-		public void addCookie(Cookie cookie) {
+		public boolean shouldAccept(URI uri, HttpCookie cookie) {
 			// TODO Auto-generated method stub
-			cookies.add(cookie);
-		}
-
-		@Override
-		public void clear() {
-			// TODO Auto-generated method stub
-			cookies.clear();
-		}
-
-		@Override
-		public boolean clearExpired(Date date) {
-			// TODO Auto-generated method stub
-			boolean deleted=false;
-			for(Iterator<Cookie> iter=cookies.iterator();iter.hasNext();){
-				Cookie cookie=iter.next();
-				if(cookie.getExpiryDate().before(date)){
-					cookies.remove(cookie);
-					deleted=true;
-				}
-					
-				
-			}
-			return deleted;
-		}
-
-		@Override
-		public List<Cookie> getCookies() {
-			// TODO Auto-generated method stub
-			return cookies;
+			return true;
 		}
 		
 	}
+	@SuppressLint("NewApi")
+	private static class MyCookieStore implements CookieStore {
+		  private Map<URI, List<HttpCookie>> map = new HashMap<URI, List<HttpCookie>>();
+
+		  public void add(URI uri, HttpCookie cookie) {
+		    List<HttpCookie> cookies = map.get(uri);
+		    if (cookies == null) {
+		      cookies = new ArrayList<HttpCookie>();
+		      map.put(uri, cookies);
+		    }
+		    Log.d(TAG, "name="+cookie.getName()+",value="+cookie.getValue());
+		    cookies.add(cookie);
+		  }
+
+		  public List<HttpCookie> get(URI uri) {
+		    List<HttpCookie> cookies = map.get(uri);
+		    if (cookies == null) {
+		      cookies = new ArrayList<HttpCookie>();
+		      map.put(uri, cookies);
+		    }
+		    return cookies;
+		  }
+
+		  public List<HttpCookie> getCookies() {
+		    Collection<List<HttpCookie>> values = map.values();
+		    List<HttpCookie> result = new ArrayList<HttpCookie>();
+		    for (List<HttpCookie> value : values) {
+		      result.addAll(value);
+		    }
+		    return result;
+		  }
+
+		  public List<URI> getURIs() {
+		    Set<URI> keys = map.keySet();
+		    return new ArrayList<URI>(keys);
+
+		  }
+
+		  public boolean remove(URI uri, HttpCookie cookie) {
+		    List<HttpCookie> cookies = map.get(uri);
+		    if (cookies == null) {
+		      return false;
+		    }
+		    return cookies.remove(cookie);
+		  }
+
+		  public boolean removeAll() {
+		    map.clear();
+		    return true;
+		  }
+		}
 
 }

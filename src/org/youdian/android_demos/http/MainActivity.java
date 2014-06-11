@@ -16,13 +16,14 @@ import android.widget.TextView;
 public class MainActivity extends Activity{
 	TextView tv;
 	private static final String HTTPS_URL="https://w.mail.qq.com/cgi-bin/loginpage?f=xhtml";
+	private static final String HTTP_URL="http://www.baidu.com";
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main_textview);
 		tv=(TextView)findViewById(R.id.tv);
-		new MyAsyncTask().execute(HTTPS_URL);
+		new MyAsyncTask().execute(HTTP_URL);
 	}
 
 	class MyAsyncTask extends AsyncTask<String,Void,String>{
@@ -38,7 +39,7 @@ public class MainActivity extends Activity{
 		protected String doInBackground(String... params) {
 			// TODO Auto-generated method stub
 			for(String url :params){
-				InputStream in=HttpsRequest.viaSafeConnection(url);
+				InputStream in=HttpUtils.get(url);
 				if(in!=null){
 					BufferedReader reader=new BufferedReader(new InputStreamReader(in));
 					StringBuffer sb=new StringBuffer();
