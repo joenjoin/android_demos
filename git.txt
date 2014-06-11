@@ -14,3 +14,6 @@
     HEAD 最近一个提交
     HEAD^ 上一次
     <commit_id>  每次commit的SHA1值. 可以用git log 看到,也可以在页面上commit标签页里找到.
+
+    2. git 取消 add 操作
+     git reset HEAD <file-name>
