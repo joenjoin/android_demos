@@ -10,6 +10,7 @@ import org.youdian.android_demos.R;
 import android.app.Activity;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.webkit.WebView;
 import android.widget.TextView;
 
@@ -23,7 +24,25 @@ public class MainActivity extends Activity{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main_textview);
 		tv=(TextView)findViewById(R.id.tv);
-		new MyAsyncTask().execute(HTTP_URL);
+		Log.d("HttpUtils", "request 1 start");
+		new MyAsyncTask().execute(HTTP_URL+"?o=1");
+		try {
+			Thread.sleep(100);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		Log.d("HttpUtils", "request 2 start");
+		new MyAsyncTask().execute(HTTP_URL+"?o=2");
+		try {
+			Thread.sleep(100);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		Log.d("HttpUtils", "request 3 start");
+		new MyAsyncTask().execute(HTTP_URL+"?o=3");
+
 	}
 
 	class MyAsyncTask extends AsyncTask<String,Void,String>{

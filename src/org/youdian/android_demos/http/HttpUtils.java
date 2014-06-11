@@ -106,6 +106,7 @@ public class HttpUtils {
 		InputStream in=null;
 		try {
 			conn=(HttpURLConnection) new URL(url).openConnection();
+			conn.setRequestProperty("User_Agent", "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/33.0.1750.154 Safari/537.36");
 			in=conn.getInputStream();
 		} catch (MalformedURLException e) {
 			// TODO Auto-generated catch block
@@ -144,13 +145,14 @@ public class HttpUtils {
 		
 	}
 	
-	private static List<Cookie> cookies=new ArrayList<Cookie>();
+
 	@SuppressLint("NewApi")
 	private static class LocalCookiePolicy implements CookiePolicy{
 
 		@Override
 		public boolean shouldAccept(URI uri, HttpCookie cookie) {
 			// TODO Auto-generated method stub
+			Log.d(TAG, "shouldAccept");
 			return true;
 		}
 		
@@ -163,22 +165,27 @@ public class HttpUtils {
 		    List<HttpCookie> cookies = map.get(uri);
 		    if (cookies == null) {
 		      cookies = new ArrayList<HttpCookie>();
-		      map.put(uri, cookies);
+		      
 		    }
-		    Log.d(TAG, "name="+cookie.getName()+",value="+cookie.getValue());
+		    Log.d(TAG, "in add(): "+uri+"\n"+"name="+cookie.getName()+",value="+cookie.getValue());
 		    cookies.add(cookie);
+		    map.put(uri, cookies);
 		  }
 
 		  public List<HttpCookie> get(URI uri) {
 		    List<HttpCookie> cookies = map.get(uri);
 		    if (cookies == null) {
 		      cookies = new ArrayList<HttpCookie>();
-		      map.put(uri, cookies);
+		      //map.put(uri, cookies);
 		    }
+		   // for(HttpCookie cookie:cookies){
+		   // 	Log.d(TAG, "in get() : "+uri+"\n"+"name="+cookie.getName()+",value="+cookie.getValue());
+		   // }
 		    return cookies;
-		  }
+		  } 
 
 		  public List<HttpCookie> getCookies() {
+			  Log.d(TAG, "getCookies");
 		    Collection<List<HttpCookie>> values = map.values();
 		    List<HttpCookie> result = new ArrayList<HttpCookie>();
 		    for (List<HttpCookie> value : values) {
@@ -188,12 +195,14 @@ public class HttpUtils {
 		  }
 
 		  public List<URI> getURIs() {
+			  Log.d(TAG, "getUris");
 		    Set<URI> keys = map.keySet();
 		    return new ArrayList<URI>(keys);
 
 		  }
 
 		  public boolean remove(URI uri, HttpCookie cookie) {
+			  Log.d(TAG, "remove");
 		    List<HttpCookie> cookies = map.get(uri);
 		    if (cookies == null) {
 		      return false;
@@ -202,6 +211,7 @@ public class HttpUtils {
 		  }
 
 		  public boolean removeAll() {
+			Log.d(TAG, "removeall");
 		    map.clear();
 		    return true;
 		  }
