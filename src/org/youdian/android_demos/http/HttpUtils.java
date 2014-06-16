@@ -177,7 +177,8 @@ public class HttpUtils {
 			String cookie_text=TextUtils.join(";", cookies);
 			conn.setRequestProperty("Cookie", cookie_text);
 			conn.setRequestProperty("User_Agent", "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/33.0.1750.154 Safari/537.36");
-			conn.setRequestProperty("Accept-Encoding", "gzip");
+			if(isGzipEnabled())
+				conn.setRequestProperty("Accept-Encoding", "gzip");
 			conn.setRequestProperty("Connection", "keep-alive");
 			Map<String,List<String>> headers=conn.getRequestProperties();
 			for(String key:headers.keySet()){
@@ -192,9 +193,11 @@ public class HttpUtils {
 				builder.append("\n");
 				Log.d(TAG, builder.toString());
 			}
-		
-			
-			in=new GZIPInputStream(conn.getInputStream());
+			String s=conn.getHeaderField("Content-Encoding");
+			if(s!=null&&s.contains("gzip"))
+				in=new GZIPInputStream(conn.getInputStream());
+			else
+				in=conn.getInputStream();
 			handler.put(new URI(url), conn.getHeaderFields());
 			Map<String,List<String>> responseheaders=conn.getHeaderFields();
 			for(String key:responseheaders.keySet()){
