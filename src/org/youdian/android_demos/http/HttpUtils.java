@@ -15,6 +15,7 @@ import java.net.HttpCookie;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.util.ArrayList;
@@ -31,14 +32,33 @@ import org.apache.http.HttpStatus;
 
 import java.net.CookieStore;
 
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
 import org.apache.http.cookie.Cookie;
+import org.apache.http.impl.client.DefaultHttpClient;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.util.Log;
 
 public class HttpUtils {
-	
+	private Context context=null;
 	private static final String TAG="HttpUtils";
+	/*
+	 * 打开http缓存功能，仅对4.0以上版本有效
+	 */
+	private void enableHttpResponseCache() {  
+		    try {  
+		        long httpCacheSize = 10 * 1024 * 1024; // 10 MiB  
+		        File httpCacheDir = new File(context.getCacheDir(), "http");  
+		        Class.forName("android.net.http.HttpResponseCache")  
+		            .getMethod("install", File.class, long.class)  
+		            .invoke(null, httpCacheDir, httpCacheSize);  
+		    } catch (Exception httpResponseCacheNotAvailable) {  
+		    }  
+		}   
+	 
 	/*
 	 * 把普通中文字符串转换成 application/x-www-form-urlencoded 字符串
 	 */
@@ -100,18 +120,82 @@ public class HttpUtils {
 		}
 		return result;
 	}
-	public static InputStream get(String url){
+	
+	public static InputStream httpGet(String url){
 		initCookieStore();
+		HttpGet request=new HttpGet(url);
+		InputStream in=null;
+		HttpClient client=new DefaultHttpClient();
+		HttpResponse response=null;
+		try {
+			response=client.execute(request);
+			in=response.getEntity().getContent();
+		} catch (ClientProtocolException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return in;
+	}
+	private static CookieManager handler;
+	@SuppressLint("NewApi")
+	private static CookieManager gethandler(){
+		if(handler==null){
+			handler=new CookieManager(null,CookiePolicy.ACCEPT_ALL);
+			CookieHandler.setDefault(handler);
+		}
+		
+		return handler;
+	}
+	@SuppressLint("NewApi")
+	public static InputStream get(String url){
+		//CookieStore store = new MyCookieStore();
+		//CookiePolicy policy = new LocalCookiePolicy();
+		//CookieManager handler = new CookieManager(store, policy);
+		
+		
 		HttpURLConnection conn=null;
 		InputStream in=null;
 		try {
+		
 			conn=(HttpURLConnection) new URL(url).openConnection();
+			conn.setRequestProperty("Cookie", gethandler().getCookieStore().get(new URI(url)).toString());
 			conn.setRequestProperty("User_Agent", "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/33.0.1750.154 Safari/537.36");
+			Map<String,List<String>> headers=conn.getRequestProperties();
+			for(String key:headers.keySet()){
+				StringBuilder builder=new StringBuilder();
+				builder.append("request_key="+key+",value=");
+				List<String> values=headers.get(key);
+				for(String value:values){
+					builder.append(value+",");
+				}
+				builder.append("\n");
+				Log.d(TAG, builder.toString());
+			}
+		
+			
 			in=conn.getInputStream();
+			handler.put(new URI(url), conn.getHeaderFields());
+			Map<String,List<String>> responseheaders=conn.getHeaderFields();
+			for(String key:responseheaders.keySet()){
+				StringBuilder builder=new StringBuilder();
+				builder.append("response_key="+key+",value=");
+				List<String> values=responseheaders.get(key);
+				for(String value:values){
+					builder.append(value+",");
+				}
+				builder.append("\n");
+				Log.d(TAG, builder.toString());
+			}
 		} catch (MalformedURLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (URISyntaxException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
@@ -124,6 +208,7 @@ public class HttpUtils {
 		CookiePolicy policy = new LocalCookiePolicy();
 		CookieManager handler = new CookieManager(store, policy);
 		CookieHandler.setDefault(handler);
+		CookieHandler.getDefault();
 	}
 	private static void writeStream(OutputStream out,File file){
 		InputStream in;
@@ -164,7 +249,7 @@ public class HttpUtils {
 		  public void add(URI uri, HttpCookie cookie) {
 		    List<HttpCookie> cookies = map.get(uri);
 		    if (cookies == null) {
-		      cookies = new ArrayList<HttpCookie>();
+		    	cookies = new ArrayList<HttpCookie>();
 		      
 		    }
 		    Log.d(TAG, "in add(): "+uri+"\n"+"name="+cookie.getName()+",value="+cookie.getValue());
