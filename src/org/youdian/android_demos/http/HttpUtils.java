@@ -26,6 +26,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.zip.GZIPInputStream;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
@@ -40,11 +41,22 @@ import org.apache.http.impl.client.DefaultHttpClient;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.text.TextUtils;
 import android.util.Log;
 
 public class HttpUtils {
 	private Context context=null;
 	private static final String TAG="HttpUtils";
+	private static boolean isGzipEnabled=false;
+	
+	public static boolean isGzipEnabled() {
+		return isGzipEnabled;
+	}
+
+	public static void setGzipEnabled(boolean isGzipEnabled) {
+		HttpUtils.isGzipEnabled = isGzipEnabled;
+	}
+
 	/*
 	 * 打开http缓存功能，仅对4.0以上版本有效
 	 */
@@ -141,9 +153,9 @@ public class HttpUtils {
 	}
 	private static CookieManager handler;
 	@SuppressLint("NewApi")
-	private static CookieManager gethandler(){
+	private static CookieManager getHandler(){
 		if(handler==null){
-			handler=new CookieManager(null,CookiePolicy.ACCEPT_ALL);
+			handler=new CookieManager(new MyCookieStore(),CookiePolicy.ACCEPT_ALL);
 			CookieHandler.setDefault(handler);
 		}
 		
@@ -161,10 +173,16 @@ public class HttpUtils {
 		try {
 		
 			conn=(HttpURLConnection) new URL(url).openConnection();
-			conn.setRequestProperty("Cookie", gethandler().getCookieStore().get(new URI(url)).toString());
+			List<HttpCookie> cookies=getHandler().getCookieStore().get(new URI(url));
+			String cookie_text=TextUtils.join(";", cookies);
+			conn.setRequestProperty("Cookie", cookie_text);
 			conn.setRequestProperty("User_Agent", "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/33.0.1750.154 Safari/537.36");
+			conn.setRequestProperty("Accept-Encoding", "gzip");
+			conn.setRequestProperty("Connection", "keep-alive");
 			Map<String,List<String>> headers=conn.getRequestProperties();
 			for(String key:headers.keySet()){
+				if(!key.equalsIgnoreCase("cookie"))
+					continue;
 				StringBuilder builder=new StringBuilder();
 				builder.append("request_key="+key+",value=");
 				List<String> values=headers.get(key);
@@ -176,10 +194,12 @@ public class HttpUtils {
 			}
 		
 			
-			in=conn.getInputStream();
+			in=new GZIPInputStream(conn.getInputStream());
 			handler.put(new URI(url), conn.getHeaderFields());
 			Map<String,List<String>> responseheaders=conn.getHeaderFields();
 			for(String key:responseheaders.keySet()){
+				if(key==null || !key.equalsIgnoreCase("set-cookie"))
+					continue;
 				StringBuilder builder=new StringBuilder();
 				builder.append("response_key="+key+",value=");
 				List<String> values=responseheaders.get(key);
@@ -244,34 +264,54 @@ public class HttpUtils {
 	}
 	@SuppressLint("NewApi")
 	private static class MyCookieStore implements CookieStore {
-		  private Map<URI, List<HttpCookie>> map = new HashMap<URI, List<HttpCookie>>();
-
+		  private Map<String, List<HttpCookie>> cookieStore = new HashMap<String, List<HttpCookie>>();
+		  private String getKey(URI uri){
+			  String host=uri.getHost();
+			  String path=uri.getPath();
+			StringBuilder builder=new StringBuilder();
+			builder.append(host);
+			builder.append(path);
+			return builder.toString();
+			  
+		  }
 		  public void add(URI uri, HttpCookie cookie) {
-		    List<HttpCookie> cookies = map.get(uri);
+			String key=getKey(uri);
+		    List<HttpCookie> cookies = cookieStore.get(key);
 		    if (cookies == null) {
 		    	cookies = new ArrayList<HttpCookie>();
 		      
 		    }
-		    Log.d(TAG, "in add(): "+uri+"\n"+"name="+cookie.getName()+",value="+cookie.getValue());
-		    cookies.add(cookie);
-		    map.put(uri, cookies);
+		    boolean existed=false;
+		    for(int i=0;i<cookies.size();i++){
+		    	HttpCookie original_cookie=cookies.get(i);
+		    	if(cookie.getName().equalsIgnoreCase(original_cookie.getName())){
+		    		cookies.set(i, cookie);
+		    		existed=true;
+		    		break;
+		    	}
+		    		
+		    }
+		    //Log.d(TAG, "in add() uri="+uri);
+		   // Log.d(TAG, "in add(): "+uri+"\n"+"name="+cookie.getName()+",value="+cookie.getValue());
+		    if(!existed)
+		    	cookies.add(cookie);
+		    cookieStore.put(key, cookies);
+		    
 		  }
 
 		  public List<HttpCookie> get(URI uri) {
-		    List<HttpCookie> cookies = map.get(uri);
-		    if (cookies == null) {
-		      cookies = new ArrayList<HttpCookie>();
-		      //map.put(uri, cookies);
-		    }
-		   // for(HttpCookie cookie:cookies){
-		   // 	Log.d(TAG, "in get() : "+uri+"\n"+"name="+cookie.getName()+",value="+cookie.getValue());
-		   // }
+			  //Log.d(TAG, "in get() uri="+uri);
+			  String key=getKey(uri);
+		    List<HttpCookie> cookies = cookieStore.get(key);
+		   if (cookies == null) {
+			   cookies = new ArrayList<HttpCookie>();
+		  }
 		    return cookies;
 		  } 
 
 		  public List<HttpCookie> getCookies() {
 			  Log.d(TAG, "getCookies");
-		    Collection<List<HttpCookie>> values = map.values();
+		    Collection<List<HttpCookie>> values = cookieStore.values();
 		    List<HttpCookie> result = new ArrayList<HttpCookie>();
 		    for (List<HttpCookie> value : values) {
 		      result.addAll(value);
@@ -281,14 +321,15 @@ public class HttpUtils {
 
 		  public List<URI> getURIs() {
 			  Log.d(TAG, "getUris");
-		    Set<URI> keys = map.keySet();
-		    return new ArrayList<URI>(keys);
+		    Set<String > keys = cookieStore.keySet();
+		    //return new ArrayList<URI>(keys);
+		    return null;
 
 		  }
 
 		  public boolean remove(URI uri, HttpCookie cookie) {
 			  Log.d(TAG, "remove");
-		    List<HttpCookie> cookies = map.get(uri);
+		    List<HttpCookie> cookies = cookieStore.get(uri);
 		    if (cookies == null) {
 		      return false;
 		    }
@@ -297,7 +338,7 @@ public class HttpUtils {
 
 		  public boolean removeAll() {
 			Log.d(TAG, "removeall");
-		    map.clear();
+		    cookieStore.clear();
 		    return true;
 		  }
 		}
