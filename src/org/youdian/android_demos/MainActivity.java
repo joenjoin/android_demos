@@ -1,7 +1,7 @@
 package org.youdian.android_demos;
 
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -15,11 +15,12 @@ public class MainActivity extends ActionBarActivity {
 
 	}
 
-	public void clicked(View v){
-		switch(v.getId()){
-			
+	public void clicked(View v) {
+		switch (v.getId()) {
+
 		}
 	}
+
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 
@@ -39,6 +40,5 @@ public class MainActivity extends ActionBarActivity {
 		}
 		return super.onOptionsItemSelected(item);
 	}
-
 
 }

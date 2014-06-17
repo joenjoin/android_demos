@@ -2,7 +2,6 @@ package org.youdian.android_demos.listview;
 
 import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 
 import org.youdian.android_demos.R;
 
@@ -20,28 +19,33 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 public class MainListViewAdapter extends BaseAdapter {
-	private static final String TAG="MainListViewAdapter";
+	private static final String TAG = "MainListViewAdapter";
 	ArrayList<String> mData;
 	SparseBooleanArray mStatus;
-	HashSet<Integer> mSelectedItems=null;
+	HashSet<Integer> mSelectedItems = null;
 	Context mContext;
-	private boolean showCheckBox=false;
+	private boolean showCheckBox = false;
+
 	public boolean isShowCheckBox() {
 		return showCheckBox;
 	}
+
 	public void setShowCheckBox(boolean showCheckBox) {
 		this.showCheckBox = showCheckBox;
-		
+
 	}
-	public MainListViewAdapter(){
-	
+
+	public MainListViewAdapter() {
+
 	}
-	public MainListViewAdapter(Context context,ArrayList<String> mData){
-		this.mContext=context;
-		this.mData=mData;
-		mStatus=new SparseBooleanArray(30);
-		mSelectedItems=new HashSet<Integer>();
+
+	public MainListViewAdapter(Context context, ArrayList<String> mData) {
+		this.mContext = context;
+		this.mData = mData;
+		mStatus = new SparseBooleanArray(30);
+		mSelectedItems = new HashSet<Integer>();
 	}
+
 	@Override
 	public int getCount() {
 		// TODO Auto-generated method stub
@@ -53,79 +57,87 @@ public class MainListViewAdapter extends BaseAdapter {
 		// TODO Auto-generated method stub
 		return mData.get(position);
 	}
-	public HashSet<Integer> getSelectedItems(){
+
+	public HashSet<Integer> getSelectedItems() {
 		return mSelectedItems;
 	}
+
 	@Override
 	public long getItemId(int position) {
 		// TODO Auto-generated method stub
 		return position;
 	}
-	public void setChecked(int position,boolean checked){
+
+	public void setChecked(int position, boolean checked) {
 		mStatus.put(position, checked);
-		if(checked){
+		if (checked) {
 			mSelectedItems.add(position);
-			Log.d(TAG, position+"  selected");
-		}else{
+			Log.d(TAG, position + "  selected");
+		} else {
 			mSelectedItems.remove(Integer.valueOf(position));
-			Log.d(TAG, position+"  removed");
+			Log.d(TAG, position + "  removed");
 		}
 	}
+
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 		// TODO Auto-generated method stub
-		ViewHolder holder=null;
-		if(convertView==null){
-			holder=new ViewHolder();
-			convertView=LayoutInflater.from(mContext).
-					inflate(R.layout.item_listview_main, parent, false);
+		ViewHolder holder = null;
+		if (convertView == null) {
+			holder = new ViewHolder();
+			convertView = LayoutInflater.from(mContext).inflate(
+					R.layout.item_listview_main, parent, false);
 			convertView.setTag(holder);
-			holder.name=(TextView)convertView.findViewById(R.id.name);
-			holder.btn=(Button)convertView.findViewById(R.id.button);
-			holder.check=(CheckBox)convertView.findViewById(R.id.checkbox);
-		}else{
-			holder=(ViewHolder) convertView.getTag();
+			holder.name = (TextView) convertView.findViewById(R.id.name);
+			holder.btn = (Button) convertView.findViewById(R.id.button);
+			holder.check = (CheckBox) convertView.findViewById(R.id.checkbox);
+		} else {
+			holder = (ViewHolder) convertView.getTag();
 		}
 		holder.name.setText(mData.get(position));
 		holder.btn.setTag(position);
 		holder.btn.setOnClickListener(new View.OnClickListener() {
-			
+
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				int position=(int) v.getTag();
-				Toast.makeText(mContext, " button "+position+" clicked", Toast.LENGTH_SHORT).show();
+				int position = (int) v.getTag();
+				Toast.makeText(mContext, " button " + position + " clicked",
+						Toast.LENGTH_SHORT).show();
 			}
 		});
-		if(showCheckBox){
+		if (showCheckBox) {
 			holder.check.setTag(position);
 			holder.check.setVisibility(View.VISIBLE);
-			boolean checked=mStatus.get(position);
+			boolean checked = mStatus.get(position);
 			holder.check.setChecked(checked);
-			holder.check.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-				
-				@Override
-				public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-					// TODO Auto-generated method stub
-					int position=(int) buttonView.getTag();
-					mStatus.put(position, isChecked);
-					if(isChecked){
-						mSelectedItems.add(position);
-						Log.d(TAG, position+"  selected");
-					}else{
-						mSelectedItems.remove(Integer.valueOf(position));
-						Log.d(TAG, position+"  removed");
-					}
-				}
-			});
-				
-		}else{
+			holder.check
+					.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+
+						@Override
+						public void onCheckedChanged(CompoundButton buttonView,
+								boolean isChecked) {
+							// TODO Auto-generated method stub
+							int position = (int) buttonView.getTag();
+							mStatus.put(position, isChecked);
+							if (isChecked) {
+								mSelectedItems.add(position);
+								Log.d(TAG, position + "  selected");
+							} else {
+								mSelectedItems.remove(Integer.valueOf(position));
+								Log.d(TAG, position + "  removed");
+							}
+						}
+					});
+
+		} else {
 			holder.check.setVisibility(View.INVISIBLE);
 		}
 
 		return convertView;
 	}
-	class ViewHolder{
+
+	class ViewHolder {
 		TextView name;
 		Button btn;
 		CheckBox check;

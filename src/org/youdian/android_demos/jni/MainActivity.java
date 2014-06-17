@@ -8,19 +8,21 @@ import android.widget.TextView;
 
 public class MainActivity extends Activity {
 	TextView tv;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main_textview);
-		tv=(TextView)findViewById(R.id.tv);
-		String text=hello();
+		tv = (TextView) findViewById(R.id.tv);
+		String text = hello();
 		tv.setText(text);
 	}
+
 	public native String hello();
-	
-	static{
-		
+
+	static {
+
 		System.loadLibrary("hellojni");
 	}
 

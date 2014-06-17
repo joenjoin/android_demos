@@ -11,21 +11,21 @@ import android.app.Activity;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
-import android.webkit.WebView;
 import android.widget.TextView;
 
-public class MainActivity extends Activity{
+public class MainActivity extends Activity {
 	TextView tv;
-	private static final String HTTPS_URL="https://w.mail.qq.com/cgi-bin/loginpage?f=xhtml";
-	private static final String HTTP_URL="http://www.baidu.com";
+	private static final String HTTPS_URL = "https://w.mail.qq.com/cgi-bin/loginpage?f=xhtml";
+	private static final String HTTP_URL = "http://www.baidu.com";
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main_textview);
-		tv=(TextView)findViewById(R.id.tv);
+		tv = (TextView) findViewById(R.id.tv);
 		Log.d("HttpUtils", "request 1 start");
-		new MyAsyncTask().execute(HTTP_URL+"?o=1");
+		new MyAsyncTask().execute(HTTP_URL + "?o=1");
 		try {
 			Thread.sleep(100);
 		} catch (InterruptedException e) {
@@ -33,7 +33,7 @@ public class MainActivity extends Activity{
 			e.printStackTrace();
 		}
 		Log.d("HttpUtils", "request 2 start");
-		new MyAsyncTask().execute(HTTP_URL+"?o=2");
+		new MyAsyncTask().execute(HTTP_URL + "?o=2");
 		try {
 			Thread.sleep(100);
 		} catch (InterruptedException e) {
@@ -41,12 +41,12 @@ public class MainActivity extends Activity{
 			e.printStackTrace();
 		}
 		Log.d("HttpUtils", "request 3 start");
-		new MyAsyncTask().execute(HTTP_URL+"?o=3");
+		new MyAsyncTask().execute(HTTP_URL + "?o=3");
 
 	}
 
-	class MyAsyncTask extends AsyncTask<String,Void,String>{
-		
+	class MyAsyncTask extends AsyncTask<String, Void, String> {
+
 		@Override
 		protected void onPostExecute(String result) {
 			// TODO Auto-generated method stub
@@ -57,27 +57,28 @@ public class MainActivity extends Activity{
 		@Override
 		protected String doInBackground(String... params) {
 			// TODO Auto-generated method stub
-			for(String url :params){
-				InputStream in=HttpUtils.get(url);
-				if(in!=null){
-					BufferedReader reader=new BufferedReader(new InputStreamReader(in));
-					StringBuffer sb=new StringBuffer();
-					String line=null;
+			for (String url : params) {
+				InputStream in = HttpUtils.get(url);
+				if (in != null) {
+					BufferedReader reader = new BufferedReader(
+							new InputStreamReader(in));
+					StringBuffer sb = new StringBuffer();
+					String line = null;
 					try {
-						while((line=reader.readLine())!=null){
+						while ((line = reader.readLine()) != null) {
 							sb.append(line);
 						}
 					} catch (IOException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
-					
+
 					return sb.toString();
 				}
 			}
-			
+
 			return null;
 		}
-		
+
 	}
 }

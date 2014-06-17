@@ -5,7 +5,7 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.widget.LinearLayout;
 
-public class SwipeLayout extends LinearLayout{
+public class SwipeLayout extends LinearLayout {
 
 	public SwipeLayout(Context context, AttributeSet attrs) {
 		super(context, attrs);
@@ -15,8 +15,8 @@ public class SwipeLayout extends LinearLayout{
 	@Override
 	public boolean onInterceptTouchEvent(MotionEvent ev) {
 		// TODO Auto-generated method stub
-		 super.onInterceptTouchEvent(ev);
-		 return true;
+		super.onInterceptTouchEvent(ev);
+		return true;
 	}
 
 }

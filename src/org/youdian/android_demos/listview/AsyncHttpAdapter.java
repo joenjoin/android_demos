@@ -30,30 +30,32 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 public class AsyncHttpAdapter extends BaseAdapter {
-	
+
 	private static class Utils {
-		private static String baseUrl="http://sapp-pics.stor.sinaapp.com/";
+		private static String baseUrl = "http://sapp-pics.stor.sinaapp.com/";
 		private static String image;
-		public static ArrayList<String> URLS=new ArrayList<String>();
-		static{
-			for(int i=1;i<=60;i++){
-				image=baseUrl+i+".jpg";
+		public static ArrayList<String> URLS = new ArrayList<String>();
+		static {
+			for (int i = 1; i <= 60; i++) {
+				image = baseUrl + i + ".jpg";
 				URLS.add(image);
 			}
 		}
 
 	}
 
-	
-	ArrayList<HashMap<String,String>> mResources=new ArrayList<>();
+	ArrayList<HashMap<String, String>> mResources = new ArrayList<>();
 	Context mContext;
-	public AsyncHttpAdapter(Context context){
-		mContext=context;
+
+	public AsyncHttpAdapter(Context context) {
+		mContext = context;
 	}
-	public void setResources(ArrayList<HashMap<String,String>> mResources){
-		
-		this.mResources=mResources;
+
+	public void setResources(ArrayList<HashMap<String, String>> mResources) {
+
+		this.mResources = mResources;
 	}
+
 	@Override
 	public int getCount() {
 		// TODO Auto-generated method stub
@@ -65,7 +67,7 @@ public class AsyncHttpAdapter extends BaseAdapter {
 		// TODO Auto-generated method stub
 		return position;
 	}
-	
+
 	@Override
 	public long getItemId(int position) {
 		// TODO Auto-generated method stub
@@ -75,52 +77,56 @@ public class AsyncHttpAdapter extends BaseAdapter {
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 		// TODO Auto-generated method stub
-		ViewHolder viewHolder=null;
-		if(convertView==null){
-			convertView=(View)LayoutInflater.from(mContext).inflate(R.layout.item_listview_async, parent, false);
-			viewHolder=new ViewHolder();
+		ViewHolder viewHolder = null;
+		if (convertView == null) {
+			convertView = (View) LayoutInflater.from(mContext).inflate(
+					R.layout.item_listview_async, parent, false);
+			viewHolder = new ViewHolder();
 			convertView.setTag(viewHolder);
-		}else{
-			viewHolder=(ViewHolder) convertView.getTag();
+		} else {
+			viewHolder = (ViewHolder) convertView.getTag();
 		}
-		viewHolder.title=(TextView)convertView.findViewById(R.id.title);
-		viewHolder.content=(ImageView)convertView.findViewById(R.id.content);
-		String url=Utils.URLS.get(position);
-		viewHolder.title.setText("image "+(position+1));
+		viewHolder.title = (TextView) convertView.findViewById(R.id.title);
+		viewHolder.content = (ImageView) convertView.findViewById(R.id.content);
+		String url = Utils.URLS.get(position);
+		viewHolder.title.setText("image " + (position + 1));
 		viewHolder.content.setTag(url);
-		//viewHolder.content.setImageResource(R.drawable.ic_launcher);
-		setupImage(url,viewHolder.content);
+		// viewHolder.content.setImageResource(R.drawable.ic_launcher);
+		setupImage(url, viewHolder.content);
 		return convertView;
 	}
-	
+
 	private void setupImage(String url, ImageView content) {
 		// TODO Auto-generated method stub
-		ImageLoaderTask task=new ImageLoaderTask();
+		ImageLoaderTask task = new ImageLoaderTask();
 		task.setEntity(content);
 		task.execute(url);
 	}
-	class ImageLoaderTask extends AsyncTask<String,Void,Bitmap>{
+
+	class ImageLoaderTask extends AsyncTask<String, Void, Bitmap> {
 		String url;
 		ImageView image;
 		String tag;
-		protected void setEntity(ImageView content){
-			image=content;
+
+		protected void setEntity(ImageView content) {
+			image = content;
 		}
-		
+
 		@Override
 		protected Bitmap doInBackground(String... params) {
 			// TODO Auto-generated method stub
-			url=params[0];
-			if(image==null||!image.getTag().equals(url))
+			url = params[0];
+			if (image == null || !image.getTag().equals(url))
 				return null;
 			return loadImage(url);
 		}
 
-		private  Bitmap loadImage(String url) {
-			Bitmap bitmap=null;
-			bitmap= tryLoadImageFromFile(url);
-			if(bitmap!=null)return bitmap;
-			URL u=null;
+		private Bitmap loadImage(String url) {
+			Bitmap bitmap = null;
+			bitmap = tryLoadImageFromFile(url);
+			if (bitmap != null)
+				return bitmap;
+			URL u = null;
 			try {
 				u = new URL(url);
 			} catch (MalformedURLException e1) {
@@ -128,84 +134,89 @@ public class AsyncHttpAdapter extends BaseAdapter {
 				e1.printStackTrace();
 			}
 			try {
-				HttpURLConnection conn=(HttpURLConnection) u.openConnection();
-				conn.setConnectTimeout(10*1000);
+				HttpURLConnection conn = (HttpURLConnection) u.openConnection();
+				conn.setConnectTimeout(10 * 1000);
 				conn.setRequestMethod("GET");
 				conn.connect();
-				InputStream is=conn.getInputStream();
-				if(is==null)System.out.println("is =null");
+				InputStream is = conn.getInputStream();
+				if (is == null)
+					System.out.println("is =null");
 				System.out.println(url);
-				if(conn.getResponseCode()==HttpURLConnection.HTTP_OK){
+				if (conn.getResponseCode() == HttpURLConnection.HTTP_OK) {
 					return trySaveImageToFile(url, is);
 				}
-				
-				
+
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			return null;
 		}
-		
-		private  Bitmap tryLoadImageFromFile(String url){
-			File dir=mContext.getExternalCacheDir();
+
+		private Bitmap tryLoadImageFromFile(String url) {
+			File dir = mContext.getExternalCacheDir();
 			try {
 				String filename = generateFileName(url);
-				String path=dir.getAbsolutePath()+File.separator+filename;
-				//System.out.println("path in load Image="+path);
-				File f=new File(path);
-				if(f.exists()){
-					
-					Bitmap bitmap=BitmapFactory.decodeFile(path);
-					if(bitmap==null)System.out.println("bitmap is null");
+				String path = dir.getAbsolutePath() + File.separator + filename;
+				// System.out.println("path in load Image="+path);
+				File f = new File(path);
+				if (f.exists()) {
+
+					Bitmap bitmap = BitmapFactory.decodeFile(path);
+					if (bitmap == null)
+						System.out.println("bitmap is null");
 					return bitmap;
 				}
 			} catch (NoSuchAlgorithmException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			
+
 			return null;
-			
+
 		}
 
 		private String generateFileName(String url)
 				throws NoSuchAlgorithmException {
-			char hexDigits[]={'0','1','2','3','4','5','6','7','8','9','A','B','C','D','E','F'}; 
-			MessageDigest digest=MessageDigest.getInstance("MD5");
-			byte[] bytes=digest.digest(url.getBytes());
+			char hexDigits[] = { '0', '1', '2', '3', '4', '5', '6', '7', '8',
+					'9', 'A', 'B', 'C', 'D', 'E', 'F' };
+			MessageDigest digest = MessageDigest.getInstance("MD5");
+			byte[] bytes = digest.digest(url.getBytes());
 			int j = bytes.length;
-            char str[] = new char[j * 2];
-            int k = 0;
-            for (int i = 0; i < j; i++) {
-                byte byte0 = bytes[i];
-                str[k++] = hexDigits[byte0 >>> 4 & 0xf];
-                str[k++] = hexDigits[byte0 & 0xf];
-            }
-            return new String(str);
+			char str[] = new char[j * 2];
+			int k = 0;
+			for (int i = 0; i < j; i++) {
+				byte byte0 = bytes[i];
+				str[k++] = hexDigits[byte0 >>> 4 & 0xf];
+				str[k++] = hexDigits[byte0 & 0xf];
+			}
+			return new String(str);
 
 		}
-		private Bitmap trySaveImageToFile(String url,InputStream is){
-			String path=null;
-			OutputStream os=null;
+
+		private Bitmap trySaveImageToFile(String url, InputStream is) {
+			String path = null;
+			OutputStream os = null;
 			try {
-				String fileName=generateFileName(url);
-				File dir=mContext.getExternalCacheDir();
-				path=dir.getAbsolutePath()+File.separator+fileName;
-				//System.out.println("path in save Image"+path);
-				os=new BufferedOutputStream(new FileOutputStream(path), 1024*4*2);
-				byte[] buffer=new byte[1024*8];
-				BufferedInputStream bis=new BufferedInputStream(is,1024*8);
-				int n=-1;
-				while((n=bis.read(buffer))!=-1){
+				String fileName = generateFileName(url);
+				File dir = mContext.getExternalCacheDir();
+				path = dir.getAbsolutePath() + File.separator + fileName;
+				// System.out.println("path in save Image"+path);
+				os = new BufferedOutputStream(new FileOutputStream(path),
+						1024 * 4 * 2);
+				byte[] buffer = new byte[1024 * 8];
+				BufferedInputStream bis = new BufferedInputStream(is, 1024 * 8);
+				int n = -1;
+				while ((n = bis.read(buffer)) != -1) {
 					os.write(buffer, 0, n);
 				}
 				os.close();
 				//
-				BitmapFactory.Options options=new BitmapFactory.Options();
-				options.inSampleSize=5;
-				Bitmap bitmap=BitmapFactory.decodeFile(path,options);
-				if(bitmap==null)System.out.println("bitmap is null in trySaveImageToFile");
+				BitmapFactory.Options options = new BitmapFactory.Options();
+				options.inSampleSize = 5;
+				Bitmap bitmap = BitmapFactory.decodeFile(path, options);
+				if (bitmap == null)
+					System.out.println("bitmap is null in trySaveImageToFile");
 				return bitmap;
 			} catch (NoSuchAlgorithmException e) {
 				// TODO Auto-generated catch block
@@ -216,7 +227,7 @@ public class AsyncHttpAdapter extends BaseAdapter {
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-			}finally{
+			} finally {
 				try {
 					os.close();
 				} catch (IOException e) {
@@ -224,9 +235,9 @@ public class AsyncHttpAdapter extends BaseAdapter {
 					e.printStackTrace();
 				}
 			}
-			
+
 			return null;
-			
+
 		}
 
 		@Override
@@ -239,17 +250,20 @@ public class AsyncHttpAdapter extends BaseAdapter {
 		protected void onPostExecute(Bitmap result) {
 			// TODO Auto-generated method stub
 			super.onPostExecute(result);
-			if(result==null)System.out.println("result is null in "+image.getTag().toString());
-			if(image==null||!image.getTag().equals(url)||result==null){
-				//image.setImageResource(R.drawable.ic_launcher);
+			if (result == null)
+				System.out.println("result is null in "
+						+ image.getTag().toString());
+			if (image == null || !image.getTag().equals(url) || result == null) {
+				// image.setImageResource(R.drawable.ic_launcher);
 				return;
 			}
 			image.setImageBitmap(result);
-				
+
 		}
-		
+
 	}
-	class ViewHolder{
+
+	class ViewHolder {
 		TextView title;
 		ImageView content;
 	}

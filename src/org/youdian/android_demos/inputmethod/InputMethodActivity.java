@@ -11,24 +11,26 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 
 public class InputMethodActivity extends Activity {
-	
+
 	EditText et;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_inputmethod_inputmethod);
-		et=(EditText)findViewById(R.id.et);
+		et = (EditText) findViewById(R.id.et);
 	}
 
-	public void hideOrShowInputMethod(View view){
-		InputMethodManager imm=(InputMethodManager) this.getSystemService(Context.INPUT_METHOD_SERVICE);
-		if(imm.isActive()){
+	public void hideOrShowInputMethod(View view) {
+		InputMethodManager imm = (InputMethodManager) this
+				.getSystemService(Context.INPUT_METHOD_SERVICE);
+		if (imm.isActive()) {
 			Log.d("inputmethod", "isActive");
-			imm.hideSoftInputFromWindow(this.getCurrentFocus().getWindowToken(), 0);
+			imm.hideSoftInputFromWindow(
+					this.getCurrentFocus().getWindowToken(), 0);
 		}
-		
-		
+
 	}
 
 }

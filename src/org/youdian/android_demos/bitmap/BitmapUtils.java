@@ -24,49 +24,54 @@ import android.graphics.Rect;
 import android.graphics.RectF;
 import android.graphics.Shader;
 import android.graphics.Shader.TileMode;
+
 public class BitmapUtils {
 	/*
 	 * bitmap 转换成inputstream
 	 */
-	public static InputStream bitmapToInputStream(Bitmap bitmap){
-		InputStream is=null;
-		if(bitmap==null)return null;
-		ByteArrayOutputStream out=new ByteArrayOutputStream();
+	public static InputStream bitmapToInputStream(Bitmap bitmap) {
+		InputStream is = null;
+		if (bitmap == null)
+			return null;
+		ByteArrayOutputStream out = new ByteArrayOutputStream();
 		bitmap.compress(Bitmap.CompressFormat.JPEG, 100, out);
-		is=new ByteArrayInputStream(out.toByteArray());
+		is = new ByteArrayInputStream(out.toByteArray());
 		return is;
 	}
-	
+
 	/*
-	 * 圆角图片
-	 * 为图片添加圆角效果
+	 * 圆角图片 为图片添加圆角效果
 	 */
-	public static Bitmap createRoundedCornerBitmap(Bitmap src){
-		if(src==null)
+	public static Bitmap createRoundedCornerBitmap(Bitmap src) {
+		if (src == null)
 			return null;
-		Bitmap dst=Bitmap.createBitmap(src.getWidth(), src.getHeight(), Bitmap.Config.ARGB_8888);
-		Canvas canvas=new Canvas(dst);
-		Paint paint=new Paint();
-		Rect rect=new Rect(0,0,src.getWidth(),src.getHeight());
-		RectF rectF=new RectF(rect);
+		Bitmap dst = Bitmap.createBitmap(src.getWidth(), src.getHeight(),
+				Bitmap.Config.ARGB_8888);
+		Canvas canvas = new Canvas(dst);
+		Paint paint = new Paint();
+		Rect rect = new Rect(0, 0, src.getWidth(), src.getHeight());
+		RectF rectF = new RectF(rect);
 		paint.setAntiAlias(true);
 		canvas.drawARGB(0, 0, 0, 0);
 		paint.setColor(Color.BLACK);
-		float corner=15.0f;
+		float corner = 15.0f;
 		canvas.drawRoundRect(rectF, corner, corner, paint);
 		paint.setXfermode(new PorterDuffXfermode(Mode.SRC_IN));
 		canvas.drawBitmap(src, rect, rect, paint);
 		return dst;
 	}
+
 	/*
 	 * 创建圆角图片的第二种方式,这种方式最好
 	 */
-	public static Bitmap createRoundedCornerBitmap2(Bitmap src){
-		Bitmap dst=Bitmap.createBitmap(src.getWidth(), src.getHeight(), Bitmap.Config.ARGB_8888);
+	public static Bitmap createRoundedCornerBitmap2(Bitmap src) {
+		Bitmap dst = Bitmap.createBitmap(src.getWidth(), src.getHeight(),
+				Bitmap.Config.ARGB_8888);
 		BitmapShader shader;
-		shader = new BitmapShader(src, Shader.TileMode.CLAMP, Shader.TileMode.CLAMP);
-		Canvas canvas=new Canvas(dst);
-		float radius=15.0f;
+		shader = new BitmapShader(src, Shader.TileMode.CLAMP,
+				Shader.TileMode.CLAMP);
+		Canvas canvas = new Canvas(dst);
+		float radius = 15.0f;
 		Paint paint = new Paint();
 
 		paint.setAntiAlias(true);
@@ -84,25 +89,27 @@ public class BitmapUtils {
 		canvas.drawRoundRect(rect, radius, radius, paint);
 		return dst;
 	}
+
 	/*
 	 * bitmap to byte[]
 	 */
-	public byte[] bitmapToBytes(Bitmap bitmap){
-		ByteArrayOutputStream bout=new ByteArrayOutputStream();
+	public byte[] bitmapToBytes(Bitmap bitmap) {
+		ByteArrayOutputStream bout = new ByteArrayOutputStream();
 		bitmap.compress(Bitmap.CompressFormat.PNG, 100, bout);
 		return bout.toByteArray();
 	}
+
 	/*
 	 * byte[] to bitmap
 	 */
-	public Bitmap bytesToBitmap(byte[] bytes){
+	public Bitmap bytesToBitmap(byte[] bytes) {
 		return BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
-		
+
 	}
-	
-	public File bitmapToFile(Bitmap bitmap){
-		File f=new File("b.png");
-		OutputStream out=null;
+
+	public File bitmapToFile(Bitmap bitmap) {
+		File f = new File("b.png");
+		OutputStream out = null;
 		try {
 			out = new FileOutputStream(f);
 		} catch (FileNotFoundException e) {
@@ -116,54 +123,59 @@ public class BitmapUtils {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 		return f;
 	}
+
 	/*
 	 * 创建带镜像图片
 	 */
-	public  static Bitmap createReflection(Bitmap src){
-		if(src==null)
+	public static Bitmap createReflection(Bitmap src) {
+		if (src == null)
 			return null;
-		int gap=4;
-		int width=src.getWidth();
-		int height=src.getHeight();
-		Matrix matrix=new Matrix();
+		int gap = 4;
+		int width = src.getWidth();
+		int height = src.getHeight();
+		Matrix matrix = new Matrix();
 		matrix.preScale(1, -1);
-		Bitmap reflection=Bitmap.createBitmap(src, 0, height/2, width, height/2,matrix,false);
-		Bitmap dst=Bitmap.createBitmap(width, height+height/2, Bitmap.Config.ARGB_8888);
-		Canvas canvas=new Canvas(dst);
-		Paint paint=new Paint();
+		Bitmap reflection = Bitmap.createBitmap(src, 0, height / 2, width,
+				height / 2, matrix, false);
+		Bitmap dst = Bitmap.createBitmap(width, height + height / 2,
+				Bitmap.Config.ARGB_8888);
+		Canvas canvas = new Canvas(dst);
+		Paint paint = new Paint();
 		canvas.drawBitmap(src, 0, 0, null);
-		canvas.drawRect(0, height, width, height+gap, paint);
-		canvas.drawBitmap(reflection, 0, height+gap, null);
-		LinearGradient shader = new LinearGradient(0,src.getHeight(), 0, 
+		canvas.drawRect(0, height, width, height + gap, paint);
+		canvas.drawBitmap(reflection, 0, height + gap, null);
+		LinearGradient shader = new LinearGradient(0, src.getHeight(), 0,
 				dst.getHeight(), 0x70ffffff, 0x00ffffff, TileMode.CLAMP);
 		paint.setShader(shader);
 		// Set the Transfer mode to be porter duff and destination in
 		paint.setXfermode(new PorterDuffXfermode(Mode.DST_IN));
 		// Draw a rectangle using the paint with our linear gradient
-		canvas.drawRect(0, height, width, dst.getHeight()+gap, paint);
+		canvas.drawRect(0, height, width, dst.getHeight() + gap, paint);
 
 		return dst;
-		
+
 	}
-	
+
 	/*
 	 * 为图片添加边框
 	 */
-	
-	public static Bitmap createFrameBitmap(Bitmap src,int color){
-		int frameWidth=5;
-		int srcWidth=src.getWidth();
-		int srcHeight=src.getHeight();
-		Bitmap dst=Bitmap.createBitmap(srcWidth+frameWidth*2, srcHeight+frameWidth*2, Config.ARGB_8888);
-		Canvas canvas=new Canvas(dst);
-		Paint paint=new Paint();
+
+	public static Bitmap createFrameBitmap(Bitmap src, int color) {
+		int frameWidth = 5;
+		int srcWidth = src.getWidth();
+		int srcHeight = src.getHeight();
+		Bitmap dst = Bitmap.createBitmap(srcWidth + frameWidth * 2, srcHeight
+				+ frameWidth * 2, Config.ARGB_8888);
+		Canvas canvas = new Canvas(dst);
+		Paint paint = new Paint();
 		paint.setAntiAlias(true);
 		paint.setColor(color);
 		paint.setStrokeWidth(frameWidth);
-		RectF rect=new RectF(0, 0, srcWidth+frameWidth*2, srcHeight+frameWidth*2);
+		RectF rect = new RectF(0, 0, srcWidth + frameWidth * 2, srcHeight
+				+ frameWidth * 2);
 		canvas.drawRect(rect, paint);
 		canvas.drawBitmap(src, frameWidth, frameWidth, null);
 		return dst;

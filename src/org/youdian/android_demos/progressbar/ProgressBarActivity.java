@@ -13,6 +13,5 @@ public class ProgressBarActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_progressbar_progressbar);
 	}
-	
 
 }
