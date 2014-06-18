@@ -8,9 +8,8 @@ public class BaseActivity extends Activity {
 	protected void onRestart() {
 		// TODO Auto-generated method stub
 		super.onRestart();
-		if(MainApplication.isExiting())
+		if (MainApplication.isExiting())
 			this.finish();
 	}
-	
 
 }

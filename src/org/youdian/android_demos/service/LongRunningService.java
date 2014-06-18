@@ -18,6 +18,8 @@ import android.util.Log;
  *  系统会实例化一个 Service实例，并一次调用其onCreate方法和onBind方法，然后调用者就可以和服务进行交互了，
  *  此后，如果再次使用 bindService绑定服务，系统不会创建新的Service实例，也不会再调用onBind方法；
  *  如果我们需要解除与这个服务的绑定，可使用 unbindService方法，此时onUnbind方法和onDestroy方法会被调用。
+ *  
+ *  adb shell dumpsys activity|grep oom_adj   命令查看进程的优先级 ，值越低优先级越高
  */
 public class LongRunningService extends Service {
 	private static final String TAG = "LongRuningService";

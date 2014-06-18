@@ -11,7 +11,7 @@ public class ThirdActivity extends BaseActivity implements OnClickListener {
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
-		Button btn=new Button(this);
+		Button btn = new Button(this);
 		btn.setText("Exit Application");
 		setContentView(btn);
 		btn.setOnClickListener(this);

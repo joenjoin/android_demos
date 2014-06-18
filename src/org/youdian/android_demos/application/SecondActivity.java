@@ -11,20 +11,19 @@ public class SecondActivity extends BaseActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
-		TextView tv=new TextView(this);
+		TextView tv = new TextView(this);
 		tv.setText("second activity");
 		setContentView(tv);
 		tv.setOnClickListener(new View.OnClickListener() {
-			
+
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				Intent i=new Intent();
+				Intent i = new Intent();
 				i.setClass(SecondActivity.this, ThirdActivity.class);
 				startActivity(i);
 			}
 		});
 	}
 
-	
 }
