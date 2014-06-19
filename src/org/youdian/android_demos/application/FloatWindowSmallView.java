@@ -107,25 +107,54 @@ public class FloatWindowSmallView extends LinearLayout {
 		Log.d("FloatWindow", "small window width=" + viewWidth);
 		Log.d("FloatWindow", "small window height=" + viewHeight);
 	}
+	
+	@Override
+	public boolean onInterceptTouchEvent(MotionEvent ev) {
+		// TODO Auto-generated method stub
+		boolean shouldIntercept=false;
+		int action=ev.getAction();
+		switch(action){
+		case MotionEvent.ACTION_DOWN:
+			shouldIntercept=false;
+			break;
+		case MotionEvent.ACTION_MOVE:
+			shouldIntercept=true;
+			break;
+		case MotionEvent.ACTION_CANCEL:
+		case MotionEvent.ACTION_UP:
+			shouldIntercept=false;
+			break;
+		}
+		return shouldIntercept;
+	}
 
 	@Override
 	public boolean onTouchEvent(MotionEvent event) {
 		openBigWindow();
 		Log.d("FloatWindow", "event in small window=" + event.getAction());
-		/*
-		 * switch (event.getAction()) { case MotionEvent.ACTION_DOWN: //
-		 * 手指按下时记录必要数据,纵坐标的值都需要减去状态栏高度 xInView = event.getX(); yInView =
-		 * event.getY(); xDownInScreen = event.getRawX(); yDownInScreen =
-		 * event.getRawY() - getStatusBarHeight(); xInScreen = event.getRawX();
-		 * yInScreen = event.getRawY() - getStatusBarHeight(); break; case
-		 * MotionEvent.ACTION_MOVE: xInScreen = event.getRawX(); yInScreen =
-		 * event.getRawY() - getStatusBarHeight(); // 手指移动的时候更新小悬浮窗的位置
-		 * updateViewPosition(); break; case MotionEvent.ACTION_UP: //
-		 * 如果手指离开屏幕时，
-		 * xDownInScreen和xInScreen相等，且yDownInScreen和yInScreen相等，则视为触发了单击事件。 //if
-		 * (xDownInScreen == xInScreen && yDownInScreen == yInScreen) {
-		 * openBigWindow(); //} break; default: break; } return true;
-		 */
+
+		 switch (event.getAction()) { 
+		 case MotionEvent.ACTION_DOWN: // 手指按下时记录必要数据,纵坐标的值都需要减去状态栏高度 
+			 xInView = event.getX(); 
+			 yInView =event.getY(); 
+			 xDownInScreen = event.getRawX(); 
+			 yDownInScreen =event.getRawY() - getStatusBarHeight(); 
+			 xInScreen = event.getRawX();
+			 yInScreen = event.getRawY() - getStatusBarHeight(); 
+			 break; 
+		 case MotionEvent.ACTION_MOVE: 
+			 xInScreen = event.getRawX(); 
+			 yInScreen =event.getRawY() - getStatusBarHeight(); // 手指移动的时候更新小悬浮窗的位置
+			 updateViewPosition(); 
+			 break; 
+		  case MotionEvent.ACTION_UP: //如果手指离开屏幕时，xDownInScreen和xInScreen相等，且yDownInScreen和yInScreen相等，则视为触发了单击事件。 //
+			  if
+			  (xDownInScreen == xInScreen && yDownInScreen == yInScreen) {
+				  openBigWindow(); } 
+			  break; 
+			  default: 
+				  break; 
+		 } 
 		return super.onTouchEvent(event);
 	}
 

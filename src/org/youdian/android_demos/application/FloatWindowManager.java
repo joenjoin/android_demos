@@ -14,7 +14,7 @@ import android.view.WindowManager.LayoutParams;
 public class FloatWindowManager {
 	private LayoutParams bigWindowParams;
 	WindowManager mWindowManager;
-	private View smallWindow;
+	private FloatWindowSmallView smallWindow;
 	private View bigWindow;
 	private LayoutParams smallWindowParams;
 
@@ -34,7 +34,7 @@ public class FloatWindowManager {
 		int screenWidth = metrics.widthPixels;
 		int screenHeight = metrics.heightPixels;
 		if (smallWindow == null) {
-			smallWindow = LayoutInflater.from(context).inflate(
+			smallWindow = (FloatWindowSmallView) LayoutInflater.from(context).inflate(
 					R.layout.application_floatwindow_small, null);
 			if (smallWindowParams == null) {
 				smallWindowParams = new LayoutParams();
@@ -50,7 +50,7 @@ public class FloatWindowManager {
 				smallWindowParams.x = 2;
 				smallWindowParams.y = screenHeight / 2;
 			}
-			smallWindow.setLayoutParams(smallWindowParams);
+			smallWindow.setParams(smallWindowParams);
 			wm.addView(smallWindow, smallWindowParams);
 		}
 
