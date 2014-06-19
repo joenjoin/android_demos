@@ -10,6 +10,8 @@ public class FloatWindowActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
+		// FloatWindowManager fwm=new FloatWindowManager();
+		// fwm.createSmallWindow(getApplicationContext());
 		Intent intent = new Intent(FloatWindowActivity.this,
 				FloatWindowService.class);
 		startService(intent);

@@ -33,14 +33,16 @@ public class FloatWindowManager {
 			smallWindow = new FloatWindowSmallView(context);
 			if (smallWindowParams == null) {
 				smallWindowParams = new LayoutParams();
-				smallWindowParams.type = LayoutParams.TYPE_PHONE;
+				smallWindowParams.type = LayoutParams.TYPE_SYSTEM_ALERT;
 				smallWindowParams.format = PixelFormat.RGBA_8888;
 				smallWindowParams.flags = LayoutParams.FLAG_NOT_TOUCH_MODAL
 						| LayoutParams.FLAG_NOT_FOCUSABLE;
 				smallWindowParams.gravity = Gravity.LEFT | Gravity.TOP;
-				smallWindowParams.width = FloatWindowSmallView.viewWidth;
-				smallWindowParams.height = FloatWindowSmallView.viewHeight;
-				smallWindowParams.x = screenWidth;
+				// smallWindowParams.width = FloatWindowSmallView.viewWidth;
+				// smallWindowParams.height = FloatWindowSmallView.viewHeight;
+				smallWindowParams.width = 150;// WindowManager.LayoutParams.WRAP_CONTENT;
+				smallWindowParams.height = 150;// WindowManager.LayoutParams.WRAP_CONTENT;
+				smallWindowParams.x = 2;
 				smallWindowParams.y = screenHeight / 2;
 			}
 			smallWindow.setParams(smallWindowParams);
@@ -71,7 +73,7 @@ public class FloatWindowManager {
 						- FloatWindowBigView.viewWidth / 2;
 				bigWindowParams.y = screenHeight / 2
 						- FloatWindowBigView.viewHeight / 2;
-				bigWindowParams.type = LayoutParams.TYPE_PHONE;
+				bigWindowParams.type = LayoutParams.TYPE_SYSTEM_ALERT;
 				bigWindowParams.format = PixelFormat.RGBA_8888;
 				bigWindowParams.gravity = Gravity.LEFT | Gravity.TOP;
 				bigWindowParams.width = FloatWindowBigView.viewWidth;

@@ -46,7 +46,7 @@ public class FloatWindowService extends Service {
 			timer = new Timer();
 			timer.scheduleAtFixedRate(new RefreshTask(), 0, 500);
 		}
-		return super.onStartCommand(intent, flags, startId);
+		return START_STICKY;
 	}
 
 	@Override
