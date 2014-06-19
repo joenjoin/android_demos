@@ -22,6 +22,17 @@ public class FloatWindowBigView extends FrameLayout {
 
 	private FloatWindowManager floatWindowManager;
 
+	@Override
+	protected void onFinishInflate() {
+		// TODO Auto-generated method stub
+		super.onFinishInflate();
+	}
+
+	public FloatWindowBigView(Context context, AttributeSet attrs) {
+		super(context, attrs);
+		// TODO Auto-generated constructor stub
+	}
+
 	public FloatWindowBigView(final Context context) {
 		super(context);
 		LayoutInflater.from(context).inflate(

@@ -104,7 +104,6 @@ public class FloatWindowService extends Service {
 		List<RunningTaskInfo> rti = mActivityManager.getRunningTasks(1);
 		boolean isHome = getHomes().contains(
 				rti.get(0).topActivity.getPackageName());
-		System.out.print("isHome=" + isHome);
 		return isHome;
 	}
 

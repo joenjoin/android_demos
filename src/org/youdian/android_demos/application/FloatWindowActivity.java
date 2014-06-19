@@ -3,6 +3,7 @@ package org.youdian.android_demos.application;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 
 public class FloatWindowActivity extends Activity {
 
@@ -12,6 +13,7 @@ public class FloatWindowActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		// FloatWindowManager fwm=new FloatWindowManager();
 		// fwm.createSmallWindow(getApplicationContext());
+		Log.d("FloatWindow", "startService");
 		Intent intent = new Intent(FloatWindowActivity.this,
 				FloatWindowService.class);
 		startService(intent);

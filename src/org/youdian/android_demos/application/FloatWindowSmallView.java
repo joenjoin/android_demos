@@ -4,12 +4,15 @@ import java.lang.reflect.Field;
 
 import org.youdian.android_demos.R;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
+import android.view.View;
 import android.view.WindowManager;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
@@ -71,14 +74,19 @@ public class FloatWindowSmallView extends LinearLayout {
 	private float yInView;
 
 	private FloatWindowManager floatWindowManager;
+	private ImageButton button;
 
-	public FloatWindowSmallView(Context context) {
-		super(context);
+	public FloatWindowSmallView(Context context, AttributeSet attrs) {
+		super(context, attrs);
 		windowManager = (WindowManager) context
 				.getSystemService(Context.WINDOW_SERVICE);
-		LayoutInflater.from(context).inflate(
-				R.layout.application_floatwindow_small, this);
 		floatWindowManager = new FloatWindowManager();
+		System.out.println("aaaa");
+		// TODO Auto-generated constructor stub
+	}
+
+	public FloatWindowSmallView(Context context) {
+		this(context, null);
 	}
 
 	@Override
@@ -87,6 +95,15 @@ public class FloatWindowSmallView extends LinearLayout {
 		super.onFinishInflate();
 		viewWidth = getWidth();
 		viewHeight = getHeight();
+		button = (ImageButton) this.findViewById(R.id.smallImage);
+		button.setOnClickListener(new View.OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				openBigWindow();
+			}
+		});
 		Log.d("FloatWindow", "small window width=" + viewWidth);
 		Log.d("FloatWindow", "small window height=" + viewHeight);
 	}

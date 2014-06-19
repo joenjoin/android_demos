@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<org.youdian.android_demos.application.FloatWindowSmallView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical" >
+    android:orientation="vertical"
+    android:clickable="true"
+     >
 <ImageButton 
     android:id="@+id/smallImage"
     android:layout_width="wrap_content"
@@ -11,4 +13,4 @@
     android:scaleType="centerCrop"
     />   
 
-</LinearLayout>
+</org.youdian.android_demos.application.FloatWindowSmallView >
