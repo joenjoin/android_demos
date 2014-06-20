@@ -36,7 +36,7 @@ public class FloatWindowService extends Service {
 	public void onCreate() {
 		// TODO Auto-generated method stub
 		super.onCreate();
-		floatWindowManager = new FloatWindowManager();
+		floatWindowManager = FloatWindowManager.getInstance();
 	}
 
 	@Override
@@ -67,7 +67,7 @@ public class FloatWindowService extends Service {
 					@Override
 					public void run() {
 						floatWindowManager
-								.createSmallWindow(getApplicationContext());
+								.createSmallWindow(FloatWindowService.this);
 					}
 				});
 			}

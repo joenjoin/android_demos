@@ -31,15 +31,20 @@ public class FloatWindowBigView extends FrameLayout {
 	public FloatWindowBigView(Context context, AttributeSet attrs) {
 		super(context, attrs);
 		// TODO Auto-generated constructor stub
+		floatWindowManager = FloatWindowManager.getInstance();
 	}
 
-	public FloatWindowBigView(final Context context) {
-		super(context);
-		LayoutInflater.from(context).inflate(
-				R.layout.application_floatwindow_big, this);
-		View view = findViewById(R.id.bigView);
-		viewWidth = view.getLayoutParams().width;
-		viewHeight = view.getLayoutParams().height;
-
+	@Override
+	protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+		// TODO Auto-generated method stub
+		super.onMeasure(widthMeasureSpec, heightMeasureSpec);
 	}
+
+	@Override
+	protected void onLayout(boolean changed, int left, int top, int right,
+			int bottom) {
+		// TODO Auto-generated method stub
+		super.onLayout(changed, left, top, right, bottom);
+	}
+
 }

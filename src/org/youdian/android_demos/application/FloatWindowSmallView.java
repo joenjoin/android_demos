@@ -6,62 +6,42 @@ import org.youdian.android_demos.R;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.graphics.Canvas;
 import android.util.AttributeSet;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
+import android.view.animation.LinearInterpolator;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.Scroller;
 import android.widget.Toast;
 
 public class FloatWindowSmallView extends LinearLayout {
 
-	/**
-	 * 记录小悬浮窗的宽度
-	 */
 	public static int viewWidth;
 
-	/**
-	 * 记录小悬浮窗的高度
-	 */
 	public static int viewHeight;
 
-	/**
-	 * 记录系统状态栏的高度
-	 */
 	private static int statusBarHeight;
 
-	/**
-	 * 用于更新小悬浮窗的位置
-	 */
 	private WindowManager windowManager;
 
-	/**
-	 * 小悬浮窗的参数
-	 */
 	private WindowManager.LayoutParams mParams;
 
-	/**
-	 * 记录当前手指位置在屏幕上的横坐标值
-	 */
 	private float xInScreen;
 
-	/**
-	 * 记录当前手指位置在屏幕上的纵坐标值
-	 */
 	private float yInScreen;
 
-	/**
-	 * 记录手指按下时在屏幕上的横坐标的值
-	 */
 	private float xDownInScreen;
 
-	/**
-	 * 记录手指按下时在屏幕上的纵坐标的值
-	 */
 	private float yDownInScreen;
+
+	private float screenWidth;
+	private float screenHeight;
 
 	/**
 	 * 记录手指按下时在小悬浮窗的View上的横坐标的值
@@ -74,14 +54,12 @@ public class FloatWindowSmallView extends LinearLayout {
 	private float yInView;
 
 	private FloatWindowManager floatWindowManager;
-	private ImageButton button;
 
 	public FloatWindowSmallView(Context context, AttributeSet attrs) {
 		super(context, attrs);
 		windowManager = (WindowManager) context
 				.getSystemService(Context.WINDOW_SERVICE);
-		floatWindowManager = new FloatWindowManager();
-		System.out.println("aaaa");
+		floatWindowManager = FloatWindowManager.getInstance();
 		// TODO Auto-generated constructor stub
 	}
 
@@ -93,36 +71,52 @@ public class FloatWindowSmallView extends LinearLayout {
 	protected void onFinishInflate() {
 		// TODO Auto-generated method stub
 		super.onFinishInflate();
-		viewWidth = getWidth();
-		viewHeight = getHeight();
-		button = (ImageButton) this.findViewById(R.id.smallImage);
-		button.setOnClickListener(new View.OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				openBigWindow();
-			}
-		});
-		Log.d("FloatWindow", "small window width=" + viewWidth);
-		Log.d("FloatWindow", "small window height=" + viewHeight);
+		Log.d(FloatWindowManager.TAG, "onFinishInflate");
 	}
-	
+
+	@Override
+	protected void onAttachedToWindow() {
+		// TODO Auto-generated method stub
+		super.onAttachedToWindow();
+
+	}
+
+	@Override
+	protected void onDraw(Canvas canvas) {
+		// TODO Auto-generated method stub
+		super.onDraw(canvas);
+		Log.d(FloatWindowManager.TAG, "onDraw");
+	}
+
+	@Override
+	protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+		// TODO Auto-generated method stub
+		super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+		Log.d(FloatWindowManager.TAG, "onMeasure");
+	}
+
+	@Override
+	protected void onLayout(boolean changed, int l, int t, int r, int b) {
+		// TODO Auto-generated method stub
+		super.onLayout(changed, l, t, r, b);
+		Log.d(FloatWindowManager.TAG, "onLayout");
+	}
+
 	@Override
 	public boolean onInterceptTouchEvent(MotionEvent ev) {
 		// TODO Auto-generated method stub
-		boolean shouldIntercept=false;
-		int action=ev.getAction();
-		switch(action){
+		boolean shouldIntercept = false;
+		int action = ev.getAction();
+		switch (action) {
 		case MotionEvent.ACTION_DOWN:
-			shouldIntercept=false;
+			shouldIntercept = false;
 			break;
 		case MotionEvent.ACTION_MOVE:
-			shouldIntercept=true;
+			shouldIntercept = true;
 			break;
 		case MotionEvent.ACTION_CANCEL:
 		case MotionEvent.ACTION_UP:
-			shouldIntercept=false;
+			shouldIntercept = false;
 			break;
 		}
 		return shouldIntercept;
@@ -130,32 +124,32 @@ public class FloatWindowSmallView extends LinearLayout {
 
 	@Override
 	public boolean onTouchEvent(MotionEvent event) {
-		openBigWindow();
 		Log.d("FloatWindow", "event in small window=" + event.getAction());
+		xInScreen = event.getRawX();
+		yInScreen = event.getRawY() - getStatusBarHeight();
+		switch (event.getAction()) {
+		case MotionEvent.ACTION_DOWN: // 手指按下时记录必要数据,纵坐标的值都需要减去状态栏高度
+			xInView = event.getX();
+			yInView = event.getY();
+			xDownInScreen = event.getRawX();
+			yDownInScreen = event.getRawY() - getStatusBarHeight();
 
-		 switch (event.getAction()) { 
-		 case MotionEvent.ACTION_DOWN: // 手指按下时记录必要数据,纵坐标的值都需要减去状态栏高度 
-			 xInView = event.getX(); 
-			 yInView =event.getY(); 
-			 xDownInScreen = event.getRawX(); 
-			 yDownInScreen =event.getRawY() - getStatusBarHeight(); 
-			 xInScreen = event.getRawX();
-			 yInScreen = event.getRawY() - getStatusBarHeight(); 
-			 break; 
-		 case MotionEvent.ACTION_MOVE: 
-			 xInScreen = event.getRawX(); 
-			 yInScreen =event.getRawY() - getStatusBarHeight(); // 手指移动的时候更新小悬浮窗的位置
-			 updateViewPosition(); 
-			 break; 
-		  case MotionEvent.ACTION_UP: //如果手指离开屏幕时，xDownInScreen和xInScreen相等，且yDownInScreen和yInScreen相等，则视为触发了单击事件。 //
-			  if
-			  (xDownInScreen == xInScreen && yDownInScreen == yInScreen) {
-				  openBigWindow(); } 
-			  break; 
-			  default: 
-				  break; 
-		 } 
-		return super.onTouchEvent(event);
+			break;
+		case MotionEvent.ACTION_MOVE:
+			updateViewPosition(false);
+			break;
+		case MotionEvent.ACTION_UP: // 如果手指离开屏幕时，xDownInScreen和xInScreen相等，且yDownInScreen和yInScreen相等，则视为触发了单击事件。
+									// //
+			if (xDownInScreen == xInScreen && yDownInScreen == yInScreen) {
+				openBigWindow();
+			} else {
+				updateViewPosition(true);
+			}
+			break;
+		default:
+			break;
+		}
+		return true;
 	}
 
 	/**
@@ -166,14 +160,32 @@ public class FloatWindowSmallView extends LinearLayout {
 	 */
 	public void setParams(WindowManager.LayoutParams params) {
 		mParams = params;
+		viewWidth = mParams.width;
+		viewHeight = mParams.height;
+		DisplayMetrics dm = new DisplayMetrics();
+		WindowManager manager = (WindowManager) getContext().getSystemService(
+				Context.WINDOW_SERVICE);
+		manager.getDefaultDisplay().getMetrics(dm);
+		screenWidth = dm.widthPixels;
+		screenHeight = dm.heightPixels;
 	}
 
 	/**
 	 * 更新小悬浮窗在屏幕中的位置。
 	 */
-	private void updateViewPosition() {
-		mParams.x = (int) (xInScreen - xInView);
-		mParams.y = (int) (yInScreen - yInView);
+	private void updateViewPosition(boolean isViewReleased) {
+		if (isViewReleased) {
+			int currX = mParams.x;
+			int centerX = currX + viewWidth / 2;
+			if (centerX < screenWidth / 2)
+				mParams.x = 1;
+			else
+				mParams.x = (int) (screenWidth - viewWidth) - 1;
+		} else {
+			mParams.x = (int) (xInScreen - xInView);
+			mParams.y = (int) (yInScreen - yInView);
+		}
+
 		windowManager.updateViewLayout(this, mParams);
 	}
 
@@ -181,8 +193,8 @@ public class FloatWindowSmallView extends LinearLayout {
 	 * 打开大悬浮窗，同时关闭小悬浮窗。
 	 */
 	private void openBigWindow() {
-		floatWindowManager.removeSmallWindow(getContext());
 		floatWindowManager.createBigWindow(getContext());
+		floatWindowManager.removeSmallWindow(getContext());
 
 	}
 
