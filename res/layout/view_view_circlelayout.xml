@@ -38,6 +38,6 @@
   <ImageButton 
       android:id="@+id/b7"
       style="@style/view_circlelayout_child"
-      android:background="@drawable/view_circlelayout_006"
+      android:background="@drawable/view_circlelayout_007"
       />  
 </org.youdian.android_demos.view.CircleLayout>
