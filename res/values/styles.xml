@@ -16,5 +16,10 @@
     <style name="AppTheme" parent="AppBaseTheme">
         <!-- All customizations that are NOT specific to a particular API-level can go here. -->
     </style>
-
+	<style name="view_circlelayout_child">
+	    <item name="android:layout_width">30dp</item>
+	    <item name="android:layout_height">30dp</item>
+	    <item name="android:scaleType">center</item>
+	    <item name="android:layout_marginTop">0dp</item>
+	</style>
 </resources>

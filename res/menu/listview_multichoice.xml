@@ -3,7 +3,7 @@
     <item 
         android:id="@+id/text"
         android:title="selected"
-        android:actionLayout="@layout/listview_action_view_text"
+        android:actionLayout="@layout/view_listview_action_view_text"
         />
 	<item 
 	    android:id="@+id/delete"

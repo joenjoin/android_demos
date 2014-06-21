@@ -80,7 +80,7 @@ public class RefreshableListView extends ListView implements OnScrollListener {
 		inflater = LayoutInflater.from(context);
 
 		headView = (LinearLayout) inflater.inflate(
-				R.layout.listview_refreshable_headerview, null);
+				R.layout.view_listview_refreshable_headerview, null);
 
 		arrowImageView = (ImageView) headView
 				.findViewById(R.id.head_arrowImageView);

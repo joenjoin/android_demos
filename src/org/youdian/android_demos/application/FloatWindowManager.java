@@ -46,7 +46,7 @@ public class FloatWindowManager {
 		int screenHeight = metrics.heightPixels;
 		if (smallWindow == null) {
 			smallWindow = (FloatWindowSmallView) LayoutInflater.from(context)
-					.inflate(R.layout.application_floatwindow_small, null);
+					.inflate(R.layout.view_application_floatwindow_small, null);
 			Log.d(FloatWindowManager.TAG, "layout inflate");
 			smallWindow.forceLayout();
 			int width = smallWindow.getMeasuredWidth();
@@ -89,7 +89,7 @@ public class FloatWindowManager {
 		int screenHeight = metrics.heightPixels;
 		if (bigWindow == null) {
 			bigWindow = LayoutInflater.from(context).inflate(
-					R.layout.application_floatwindow_big, null);
+					R.layout.view_application_floatwindow_big, null);
 			if (bigWindowParams == null) {
 				bigWindowParams = new LayoutParams();
 				bigWindowParams.x = screenWidth / 2

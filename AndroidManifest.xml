@@ -17,15 +17,21 @@
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme" >
+        android:theme="@style/AppBaseTheme" >
         <uses-library android:name="android.test.runner"/>
         <activity
-            android:name="org.youdian.android_demos.application.FloatWindowActivity"
+            android:name="org.youdian.android_demos.view.MainActivity"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
+                <!-- 隐式启动actiivty，不在launcher程序列表中显示  同时， actiivity设置android:theme="@android:style/Theme.NoDisplay"
+                <data 
+                    android:host="view.MainActivity"
+                    android:scheme="org.youdian.android_demos"
+                    />
+                     -->
             </intent-filter>
         </activity>
         <activity 
