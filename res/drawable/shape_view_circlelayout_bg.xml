@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?> 
+<!-- 圆形图片  	solid 和gradient二选一-->
+<shape 
+  xmlns:android="http://schemas.android.com/apk/res/android" 
+  android:shape="oval"
+  > 
+    <!-- 使用固定颜色填充图形 --> 
+    <solid android:color="#FFFFDEAD"/> 
+    
+     <!-- 使用渐变色填充图形 
+     	当angle=0时，渐变色是从左向右。 然后逆时针方向转，当angle=90时为从下往上。angle必须为45的整数倍
+     
+    <gradient 
+        android:startColor="#FFA07A"
+        android:endColor="#FFE4C4"
+        android:angle="0"
+        />
+     -->
+     
+ 	<!--stroke 描边      dash 是将图形变成竖条纹 状，dashWidth是条纹的宽度，dashGap是条纹的间隔 
+     <stroke 
+         android:width="5dp"
+         android:dashWidth="2dp"
+         android:dashGap="0dp"
+         android:color="#FFFFA07A"
+         />
+	 -->
+     <!-- padding: Button 里面的文字与Button边界的间隔 --> 
+     <padding 
+        android:left="2dp" 
+        android:top="2dp" 
+        android:right="2dp" 
+        android:bottom="2dp" 
+     /> 
+</shape> 

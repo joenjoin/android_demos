@@ -2,7 +2,7 @@
 <org.youdian.android_demos.view.CircleLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="150dp"
     android:layout_height="150dp"
-    android:background="@drawable/view_circlelayout_bg"
+    android:background="@drawable/shape_view_ring"
  >
 
   <ImageButton 
