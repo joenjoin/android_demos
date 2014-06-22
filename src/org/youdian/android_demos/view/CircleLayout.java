@@ -1,7 +1,8 @@
 package org.youdian.android_demos.view;
 
 import org.youdian.android_demos.R;
-
+import android.annotation.SuppressLint;
+import android.content.ClipData;
 import android.content.Context;
 import android.graphics.Point;
 import android.util.AttributeSet;
@@ -186,12 +187,14 @@ public class CircleLayout extends FrameLayout implements OnClickListener {
 
 	}
 
+	@SuppressLint("NewApi")
 	@Override
 	public void onClick(View v) {
 		// TODO Auto-generated method stub
 		Log.d(TAG, v.getId() + " clicked");
 		switch (v.getId()) {
 		case R.id.b1:
+			b1.startDrag(ClipData.newPlainText("label", "text"), new DragShadowBuilder(b1), null, 0);
 			break;
 		case R.id.b2:
 			break;
