@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <shape xmlns:android="http://schemas.android.com/apk/res/android"
     android:shape="ring" 
-    android:innerRadiusRatio="3" 
-    android:thicknessRatio="8" 
+    android:innerRadiusRatio="4" 
+    android:thicknessRatio="5" 
     android:useLevel="false"><!-- 必须有android:useLevel="false"属性，否则图形不会显示 -->
-    <solid android:color="#FFFFDEAD"/> 
+    <solid android:color="@color/circlelayout_light_bg_color"/> 
     <!--  
     <gradient 
         android:type="sweep" 

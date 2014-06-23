@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?> 
+<!-- 圆形图片  	solid 和gradient二选一-->
+<shape 
+  xmlns:android="http://schemas.android.com/apk/res/android" 
+  android:shape="oval"
+  > 
+    <!-- 使用固定颜色填充图形 --> 
+    <solid android:color="@color/circlelayout_light_bg_color"/> 
+ </shape>

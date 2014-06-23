@@ -5,7 +5,7 @@
   android:shape="oval"
   > 
     <!-- 使用固定颜色填充图形 --> 
-    <solid android:color="#FFFFDEAD"/> 
+    <solid android:color="@color/circlelayout_dark_bg_color"/> 
     
      <!-- 使用渐变色填充图形 
      	当angle=0时，渐变色是从左向右。 然后逆时针方向转，当angle=90时为从下往上。angle必须为45的整数倍
@@ -25,11 +25,11 @@
          android:color="#FFFFA07A"
          />
 	 -->
-     <!-- padding: Button 里面的文字与Button边界的间隔 --> 
+     <!-- padding: Button 里面的文字与Button边界的间隔 
      <padding 
         android:left="2dp" 
         android:top="2dp" 
         android:right="2dp" 
         android:bottom="2dp" 
-     /> 
+     /> --> 
 </shape> 

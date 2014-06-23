@@ -1,43 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
 <org.youdian.android_demos.view.CircleLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="150dp"
-    android:layout_height="150dp"
-    android:background="@drawable/shape_view_ring"
+    android:layout_width="300dp"
+    android:layout_height="300dp"
+
  >
 
   <ImageButton 
       android:id="@+id/b1"
       style="@style/view_circlelayout_child"
-      android:background="@drawable/view_circlelayout_001"
+      android:src="@drawable/view_circlelayout_001"
       />  
   <ImageButton 
       android:id="@+id/b2"
       style="@style/view_circlelayout_child"
-      android:background="@drawable/view_circlelayout_002"
+      android:src="@drawable/view_circlelayout_002"
       />  
   <ImageButton 
       android:id="@+id/b3"
       style="@style/view_circlelayout_child"
-      android:background="@drawable/view_circlelayout_003"
+      android:src="@drawable/view_circlelayout_003"
       />  
   <ImageButton 
       android:id="@+id/b4"
       style="@style/view_circlelayout_child"
-      android:background="@drawable/view_circlelayout_004"
+      android:src="@drawable/view_circlelayout_004"
       />  
   <ImageButton 
       android:id="@+id/b5"
       style="@style/view_circlelayout_child"
-      android:background="@drawable/view_circlelayout_005"
+      android:src="@drawable/view_circlelayout_005"
       />  
   <ImageButton 
       android:id="@+id/b6"
       style="@style/view_circlelayout_child"
-      android:background="@drawable/view_circlelayout_006"
+      android:src="@drawable/view_circlelayout_006"
       />  
   <ImageButton 
       android:id="@+id/b7"
       style="@style/view_circlelayout_child"
-      android:background="@drawable/view_circlelayout_007"
+      android:src="@drawable/view_circlelayout_007"
       />  
 </org.youdian.android_demos.view.CircleLayout>

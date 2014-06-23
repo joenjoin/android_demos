@@ -3,19 +3,25 @@ package org.youdian.android_demos.view;
 import org.youdian.android_demos.R;
 import android.annotation.SuppressLint;
 import android.content.ClipData;
+import android.content.ClipDescription;
 import android.content.Context;
+import android.content.res.Resources;
+import android.graphics.Canvas;
 import android.graphics.Point;
+import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.view.DragEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.View.OnLongClickListener;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
-public class CircleLayout extends FrameLayout implements OnClickListener {
+public class CircleLayout extends FrameLayout implements OnClickListener, OnLongClickListener {
 	private static final int CHILD_COUNT = 7;
 	public static final String TAG = "CircleLayout";
 	ImageButton b1, b2, b3, b4, b5, b6, b7;
@@ -27,6 +33,7 @@ public class CircleLayout extends FrameLayout implements OnClickListener {
 
 	public CircleLayout(Context context, AttributeSet attrs) {
 		super(context, attrs);
+		setWillNotDraw(false);
 		// TODO Auto-generated constructor stub
 	}
 
@@ -35,6 +42,7 @@ public class CircleLayout extends FrameLayout implements OnClickListener {
 		// TODO Auto-generated constructor stub
 	}
 
+	@SuppressLint("NewApi")
 	@Override
 	protected void onFinishInflate() {
 		// TODO Auto-generated method stub
@@ -46,13 +54,61 @@ public class CircleLayout extends FrameLayout implements OnClickListener {
 		b5 = (ImageButton) findViewById(R.id.b5);
 		b6 = (ImageButton) findViewById(R.id.b6);
 		b7 = (ImageButton) findViewById(R.id.b7);
+		b1.setTag("b1");
+		b2.setTag("b2");
+		b3.setTag("b3");
+		b4.setTag("b4");
+		b5.setTag("b5");
+		b6.setTag("b6");
 		b1.setOnClickListener(this);
 		b2.setOnClickListener(this);
 		b3.setOnClickListener(this);
 		b4.setOnClickListener(this);
 		b5.setOnClickListener(this);
 		b6.setOnClickListener(this);
-		b7.setOnClickListener(this);
+		//b7.setOnClickListener(this);
+		
+		OnLongClickListener onLongClickListener = new OnLongClickListener() {
+			
+			@Override
+			public boolean onLongClick(View v) {
+				// TODO Auto-generated method stub
+				v.startDrag(ClipData.newPlainText("id", v.getTag().toString()), new DragShadowBuilder(v), null, 0);
+				return true;
+			}
+		};
+		b1.setOnLongClickListener(onLongClickListener);
+		b2.setOnLongClickListener(onLongClickListener);
+		b3.setOnLongClickListener(onLongClickListener);
+		b4.setOnLongClickListener(onLongClickListener);
+		b5.setOnLongClickListener(onLongClickListener);
+		b6.setOnLongClickListener(onLongClickListener);
+		b7.setOnDragListener(new OnDragListener() {
+			
+			@Override
+			public boolean onDrag(View v, DragEvent event) {
+				// TODO Auto-generated method stub
+				final int action=event.getAction();
+				switch(action){
+				case DragEvent.ACTION_DRAG_STARTED:
+					if(event.getClipDescription().hasMimeType(ClipDescription.MIMETYPE_TEXT_PLAIN))
+						return true;
+					break;
+				case DragEvent.ACTION_DROP:
+					ClipData clipData=event.getClipData();
+					String data=(String) clipData.getItemAt(0).getText();
+					Toast.makeText(getContext(), "Dragged data is " + data, Toast.LENGTH_LONG).show();
+					return true;
+				case DragEvent.ACTION_DRAG_ENDED:
+					boolean result=event.getResult();
+					if(result)
+						Toast.makeText(getContext(), "successful handled", Toast.LENGTH_LONG).show();
+					break;
+				}
+
+				return false;
+			}
+		});
 	}
 
 	/*
@@ -127,7 +183,7 @@ public class CircleLayout extends FrameLayout implements OnClickListener {
 		int width = getMeasuredWidth();
 		int height = getMeasuredHeight();
 		Point point = new Point(width / 2, height / 2);
-		int radius = 75;
+		int radius = 150;
 		// int totalHeight = 0;
 		int childCount = getChildCount();
 		for (int i = 0; i < childCount; i++) {
@@ -186,7 +242,24 @@ public class CircleLayout extends FrameLayout implements OnClickListener {
 		}
 
 	}
-
+	
+	
+	
+	@Override
+	protected void onDraw(Canvas canvas) {
+		// TODO Auto-generated method stub
+		super.onDraw(canvas);
+		int width=getMeasuredWidth();
+		int height=getMeasuredHeight();
+		Resources res=getContext().getResources();
+		Drawable darkBg=res.getDrawable(R.drawable.shape_view_circlelayout_dark_circle_bg);
+		darkBg.setBounds(0, 0, width, height);
+		darkBg.draw(canvas);
+		Drawable lightBg=res.getDrawable(R.drawable.shape_view_circlelayout_ring_bg);
+		
+		lightBg.setBounds(width/4, height/4, width/4*3, height/4*3);
+		lightBg.draw(canvas);
+	}
 	@SuppressLint("NewApi")
 	@Override
 	public void onClick(View v) {
@@ -194,7 +267,6 @@ public class CircleLayout extends FrameLayout implements OnClickListener {
 		Log.d(TAG, v.getId() + " clicked");
 		switch (v.getId()) {
 		case R.id.b1:
-			b1.startDrag(ClipData.newPlainText("label", "text"), new DragShadowBuilder(b1), null, 0);
 			break;
 		case R.id.b2:
 			break;
@@ -207,6 +279,12 @@ public class CircleLayout extends FrameLayout implements OnClickListener {
 		case R.id.b6:
 			break;
 		}
+	}
+
+	@Override
+	public boolean onLongClick(View v) {
+		// TODO Auto-generated method stub
+		return false;
 	}
 
 }
