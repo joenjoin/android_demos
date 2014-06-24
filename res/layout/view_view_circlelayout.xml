@@ -35,9 +35,21 @@
       style="@style/view_circlelayout_child"
       android:src="@drawable/view_circlelayout_006"
       />  
+     <!-- centered round button -->
   <ImageButton 
       android:id="@+id/b7"
-      style="@style/view_circlelayout_child"
+      style="@style/view_circlelayout_child_centered"
       android:src="@drawable/view_circlelayout_007"
       />  
+     <!--  two small button on the small circle -->
+    <ImageButton 
+      android:id="@+id/b8"
+      style="@style/view_circlelayout_child_small"
+      android:src="@drawable/view_circlelayout_007"
+      />
+      <ImageButton 
+      android:id="@+id/b9"
+      style="@style/view_circlelayout_child_small"
+      android:src="@drawable/view_circlelayout_007"
+      /> 
 </org.youdian.android_demos.view.CircleLayout>

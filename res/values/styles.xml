@@ -23,4 +23,11 @@
 	    <item name="android:layout_marginTop">0dp</item>
 	    <item name="android:background">@drawable/shape_view_circlelayout_rectangle_bg</item>
 	</style>
+	<style name="view_circlelayout_child_centered" parent="view_circlelayout_child">
+	    <item name="android:background">@drawable/shape_view_circlelayout_light_circle_bg</item>
+	</style>
+	<style name="view_circlelayout_child_small" parent="view_circlelayout_child">
+	    <item name="android:layout_width">25dip</item>
+	    <item name="android:layout_height">25dip</item>
+	</style>
 </resources>

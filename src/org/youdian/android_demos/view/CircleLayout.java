@@ -24,7 +24,7 @@ import android.widget.Toast;
 public class CircleLayout extends FrameLayout implements OnClickListener, OnLongClickListener {
 	private static final int CHILD_COUNT = 7;
 	public static final String TAG = "CircleLayout";
-	ImageButton b1, b2, b3, b4, b5, b6, b7;
+	ImageButton b1, b2, b3, b4, b5, b6, b7,b8,b9;
 
 	public CircleLayout(Context context, AttributeSet attrs, int defStyle) {
 		this(context, attrs);
@@ -54,6 +54,8 @@ public class CircleLayout extends FrameLayout implements OnClickListener, OnLong
 		b5 = (ImageButton) findViewById(R.id.b5);
 		b6 = (ImageButton) findViewById(R.id.b6);
 		b7 = (ImageButton) findViewById(R.id.b7);
+		b8=(ImageButton)findViewById(R.id.b8);
+		b9=(ImageButton)findViewById(R.id.b9);
 		b1.setTag("b1");
 		b2.setTag("b2");
 		b3.setTag("b3");
@@ -66,6 +68,8 @@ public class CircleLayout extends FrameLayout implements OnClickListener, OnLong
 		b4.setOnClickListener(this);
 		b5.setOnClickListener(this);
 		b6.setOnClickListener(this);
+		b8.setOnClickListener(this);
+		b9.setOnClickListener(this);
 		//b7.setOnClickListener(this);
 		
 		OnLongClickListener onLongClickListener = new OnLongClickListener() {
@@ -182,8 +186,10 @@ public class CircleLayout extends FrameLayout implements OnClickListener, OnLong
 		Log.d(TAG, l + ", " + t + ", " + r + ", " + b);
 		int width = getMeasuredWidth();
 		int height = getMeasuredHeight();
+		//the center point of the circle
 		Point point = new Point(width / 2, height / 2);
 		int radius = 150;
+		int smallRadius=getMeasuredWidth()/4;
 		// int totalHeight = 0;
 		int childCount = getChildCount();
 		for (int i = 0; i < childCount; i++) {
@@ -227,6 +233,14 @@ public class CircleLayout extends FrameLayout implements OnClickListener, OnLong
 			case 6:
 				x = point.x - childWidth / 2;
 				y = point.y - childHeight / 2;
+				break;
+			case 7:
+				x=point.x-childWidth/2;
+				y=point.y-smallRadius+10; //5 is a margin from the top
+				break;
+			case 8:
+				x=point.x-childWidth/2;
+				y=point.y+smallRadius-childHeight-15;
 				break;
 			default:
 				throw new RuntimeException(
