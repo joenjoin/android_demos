@@ -11,7 +11,7 @@ public class ScrollerActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_scroller_main);
+		setContentView(R.layout.activity_scroll_scroller);
 	}
 
 }

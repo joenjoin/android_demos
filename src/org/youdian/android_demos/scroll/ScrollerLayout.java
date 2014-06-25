@@ -1,15 +1,19 @@
 package org.youdian.android_demos.scroll;
 
+import org.youdian.android_demos.R;
+
 import android.content.Context;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
+import android.view.View;
 import android.view.ViewConfiguration;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Scroller;
 
-public class ScrollerView extends LinearLayout {
+public class ScrollerLayout extends LinearLayout {
 	private static final int SCROLL_LENGTH=100;
 	private static final String TAG="ScrollerView";
 	Scroller mScroller;
@@ -19,62 +23,33 @@ public class ScrollerView extends LinearLayout {
 	private float mLastY;
 	private int mTouchSlop;
 	private boolean startMoving=false;
-	public ScrollerView(Context context, AttributeSet attrs) {
+	ImageView iv;
+	public ScrollerLayout(Context context, AttributeSet attrs) {
 		super(context, attrs);
 		// TODO Auto-generated constructor stub
 		mScroller=new Scroller(context);
 		mTouchSlop=ViewConfiguration.get(context).getScaledTouchSlop();
 	}
 
-	public ScrollerView(Context context) {
+	public ScrollerLayout(Context context) {
 		super(context);
 		// TODO Auto-generated constructor stub
 	}
-
+	
 	@Override
-	public boolean onTouchEvent(MotionEvent event) {
+	protected void onFinishInflate() {
 		// TODO Auto-generated method stub
-		int action=event.getAction();
-		switch(action){
-		case MotionEvent.ACTION_MOVE:
-			if(startMoving){
-				int  dy=(int) (event.getY()-mLastY);
-				mScroller.startScroll(10, 10, 0, dy);
-				Log.d(TAG, "moving");
-			}
-			break;
-		}
-		return true;
-	}
-
-	@Override
-	public boolean onInterceptTouchEvent(MotionEvent ev) {
-		// TODO Auto-generated method stub
-		Log.d(TAG, "intercept");
-		int action=ev.getAction();
-		switch(action){
-		case MotionEvent.ACTION_DOWN:
-			mDownX=ev.getX();
-			mDownY=ev.getY();
-			break;
-		case MotionEvent.ACTION_MOVE:			
-			mLastX=ev.getX();
-			mLastY=ev.getY();
-			if(Math.abs(mLastY-mDownY)>mTouchSlop*3){
-				startMoving=true;
-				Log.d(TAG, "startScroll="+startMoving);
-			}
+		super.onFinishInflate();
+		iv=(ImageView)findViewById(R.id.iv);
+		iv.setOnClickListener(new View.OnClickListener() {
 			
-		case MotionEvent.ACTION_UP:
-		case MotionEvent.ACTION_CANCEL:
-			mDownX=0;
-			mDownY=0;
-			mLastX=0;
-			mLastY=0;
-			startMoving=false;
-			break;
-		}
-		return startMoving;
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				mScroller.startScroll(mScroller.getFinalX(), mScroller.getCurrY(), -30, 0,5000);
+				invalidate();
+			}
+		});
 	}
 
 	@Override
@@ -83,6 +58,7 @@ public class ScrollerView extends LinearLayout {
 		if(mScroller.computeScrollOffset()){
 			Log.d(TAG, "scrolling");
 			scrollTo(mScroller.getCurrX(), mScroller.getCurrY());
+			invalidate();
 		}
 	}
 	
