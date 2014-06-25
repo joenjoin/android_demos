@@ -21,10 +21,11 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
-public class CircleLayout extends FrameLayout implements OnClickListener, OnLongClickListener {
+public class CircleLayout extends FrameLayout implements OnClickListener,
+		OnLongClickListener {
 	private static final int CHILD_COUNT = 7;
 	public static final String TAG = "CircleLayout";
-	ImageButton b1, b2, b3, b4, b5, b6, b7,b8,b9;
+	ImageButton b1, b2, b3, b4, b5, b6, b7, b8, b9;
 
 	public CircleLayout(Context context, AttributeSet attrs, int defStyle) {
 		this(context, attrs);
@@ -54,8 +55,8 @@ public class CircleLayout extends FrameLayout implements OnClickListener, OnLong
 		b5 = (ImageButton) findViewById(R.id.b5);
 		b6 = (ImageButton) findViewById(R.id.b6);
 		b7 = (ImageButton) findViewById(R.id.b7);
-		b8=(ImageButton)findViewById(R.id.b8);
-		b9=(ImageButton)findViewById(R.id.b9);
+		b8 = (ImageButton) findViewById(R.id.b8);
+		b9 = (ImageButton) findViewById(R.id.b9);
 		b1.setTag("b1");
 		b2.setTag("b2");
 		b3.setTag("b3");
@@ -70,14 +71,15 @@ public class CircleLayout extends FrameLayout implements OnClickListener, OnLong
 		b6.setOnClickListener(this);
 		b8.setOnClickListener(this);
 		b9.setOnClickListener(this);
-		//b7.setOnClickListener(this);
-		
+		// b7.setOnClickListener(this);
+
 		OnLongClickListener onLongClickListener = new OnLongClickListener() {
-			
+
 			@Override
 			public boolean onLongClick(View v) {
 				// TODO Auto-generated method stub
-				v.startDrag(ClipData.newPlainText("id", v.getTag().toString()), new DragShadowBuilder(v), null, 0);
+				v.startDrag(ClipData.newPlainText("id", v.getTag().toString()),
+						new DragShadowBuilder(v), null, 0);
 				return true;
 			}
 		};
@@ -88,25 +90,28 @@ public class CircleLayout extends FrameLayout implements OnClickListener, OnLong
 		b5.setOnLongClickListener(onLongClickListener);
 		b6.setOnLongClickListener(onLongClickListener);
 		b7.setOnDragListener(new OnDragListener() {
-			
+
 			@Override
 			public boolean onDrag(View v, DragEvent event) {
 				// TODO Auto-generated method stub
-				final int action=event.getAction();
-				switch(action){
+				final int action = event.getAction();
+				switch (action) {
 				case DragEvent.ACTION_DRAG_STARTED:
-					if(event.getClipDescription().hasMimeType(ClipDescription.MIMETYPE_TEXT_PLAIN))
+					if (event.getClipDescription().hasMimeType(
+							ClipDescription.MIMETYPE_TEXT_PLAIN))
 						return true;
 					break;
 				case DragEvent.ACTION_DROP:
-					ClipData clipData=event.getClipData();
-					String data=(String) clipData.getItemAt(0).getText();
-					Toast.makeText(getContext(), "Dragged data is " + data, Toast.LENGTH_LONG).show();
+					ClipData clipData = event.getClipData();
+					String data = (String) clipData.getItemAt(0).getText();
+					Toast.makeText(getContext(), "Dragged data is " + data,
+							Toast.LENGTH_LONG).show();
 					return true;
 				case DragEvent.ACTION_DRAG_ENDED:
-					boolean result=event.getResult();
-					if(result)
-						Toast.makeText(getContext(), "successful handled", Toast.LENGTH_LONG).show();
+					boolean result = event.getResult();
+					if (result)
+						Toast.makeText(getContext(), "successful handled",
+								Toast.LENGTH_LONG).show();
 					break;
 				}
 
@@ -186,10 +191,10 @@ public class CircleLayout extends FrameLayout implements OnClickListener, OnLong
 		Log.d(TAG, l + ", " + t + ", " + r + ", " + b);
 		int width = getMeasuredWidth();
 		int height = getMeasuredHeight();
-		//the center point of the circle
+		// the center point of the circle
 		Point point = new Point(width / 2, height / 2);
 		int radius = 150;
-		int smallRadius=getMeasuredWidth()/4;
+		int smallRadius = getMeasuredWidth() / 4;
 		// int totalHeight = 0;
 		int childCount = getChildCount();
 		for (int i = 0; i < childCount; i++) {
@@ -235,12 +240,12 @@ public class CircleLayout extends FrameLayout implements OnClickListener, OnLong
 				y = point.y - childHeight / 2;
 				break;
 			case 7:
-				x=point.x-childWidth/2;
-				y=point.y-smallRadius+10; //5 is a margin from the top
+				x = point.x - childWidth / 2;
+				y = point.y - smallRadius + 10; // 5 is a margin from the top
 				break;
 			case 8:
-				x=point.x-childWidth/2;
-				y=point.y+smallRadius-childHeight-15;
+				x = point.x - childWidth / 2;
+				y = point.y + smallRadius - childHeight - 15;
 				break;
 			default:
 				throw new RuntimeException(
@@ -256,24 +261,25 @@ public class CircleLayout extends FrameLayout implements OnClickListener, OnLong
 		}
 
 	}
-	
-	
-	
+
 	@Override
 	protected void onDraw(Canvas canvas) {
 		// TODO Auto-generated method stub
 		super.onDraw(canvas);
-		int width=getMeasuredWidth();
-		int height=getMeasuredHeight();
-		Resources res=getContext().getResources();
-		Drawable darkBg=res.getDrawable(R.drawable.shape_view_circlelayout_dark_circle_bg);
+		int width = getMeasuredWidth();
+		int height = getMeasuredHeight();
+		Resources res = getContext().getResources();
+		Drawable darkBg = res
+				.getDrawable(R.drawable.shape_view_circlelayout_dark_circle_bg);
 		darkBg.setBounds(0, 0, width, height);
 		darkBg.draw(canvas);
-		Drawable lightBg=res.getDrawable(R.drawable.shape_view_circlelayout_ring_bg);
-		
-		lightBg.setBounds(width/4, height/4, width/4*3, height/4*3);
+		Drawable lightBg = res
+				.getDrawable(R.drawable.shape_view_circlelayout_ring_bg);
+
+		lightBg.setBounds(width / 4, height / 4, width / 4 * 3, height / 4 * 3);
 		lightBg.draw(canvas);
 	}
+
 	@SuppressLint("NewApi")
 	@Override
 	public void onClick(View v) {

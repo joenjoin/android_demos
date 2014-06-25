@@ -13,6 +13,7 @@ import android.os.Bundle;
 import android.widget.RemoteViews;
 import android.widget.RemoteViews.RemoteView;
 import android.widget.RemoteViewsService;
+
 /*
  * android 3.0以后支持collection view ，如ListView ,GridView ,StackView ,AdapterViewFlipper
  */
@@ -22,17 +23,20 @@ public class MyRemoteViewsService extends RemoteViewsService {
 	@Override
 	public RemoteViewsFactory onGetViewFactory(Intent intent) {
 		// TODO Auto-generated method stub
-		return new MyRemoteViewsFactory(this.getApplicationContext(),intent);
+		return new MyRemoteViewsFactory(this.getApplicationContext(), intent);
 	}
-	
-	class MyRemoteViewsFactory implements RemoteViewsFactory{
-		private List<String> items=new ArrayList<String>();
+
+	class MyRemoteViewsFactory implements RemoteViewsFactory {
+		private List<String> items = new ArrayList<String>();
 		private Context context;
 		private int appWidgetId;
+
 		public MyRemoteViewsFactory(Context applicationContext, Intent intent) {
 			// TODO Auto-generated constructor stub
-			context=applicationContext;
-			appWidgetId=intent.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, AppWidgetManager.INVALID_APPWIDGET_ID);
+			context = applicationContext;
+			appWidgetId = intent.getIntExtra(
+					AppWidgetManager.EXTRA_APPWIDGET_ID,
+					AppWidgetManager.INVALID_APPWIDGET_ID);
 		}
 
 		@Override
@@ -56,11 +60,12 @@ public class MyRemoteViewsService extends RemoteViewsService {
 		@Override
 		public RemoteViews getViewAt(int position) {
 			// TODO Auto-generated method stub
-			RemoteViews rv=new RemoteViews(context.getPackageName(), R.layout.item_appwidget_simple);
+			RemoteViews rv = new RemoteViews(context.getPackageName(),
+					R.layout.item_appwidget_simple);
 			rv.setTextViewText(R.id.tv, items.get(position));
-			Bundle bundle=new Bundle();
+			Bundle bundle = new Bundle();
 			bundle.putInt(MyWidgetProvider.EXTRA_ITEM, position);
-			Intent fillInIntent=new Intent();
+			Intent fillInIntent = new Intent();
 			fillInIntent.putExtras(bundle);
 			rv.setOnClickFillInIntent(R.id.tv, fillInIntent);
 			return rv;
@@ -81,15 +86,17 @@ public class MyRemoteViewsService extends RemoteViewsService {
 		@Override
 		public void onCreate() {
 			// TODO Auto-generated method stub
-			for(int i=0;i<20;i++){
-				items.add("item "+i);
+			for (int i = 0; i < 20; i++) {
+				items.add("item " + i);
 			}
 		}
 
 		@Override
 		public void onDataSetChanged() {
 			// TODO Auto-generated method stub
-			
+			for (int i = 0; i < 20; i++) {
+				items.add("new item " + i);
+			}
 		}
 
 		@Override
@@ -97,6 +104,6 @@ public class MyRemoteViewsService extends RemoteViewsService {
 			// TODO Auto-generated method stub
 			items.clear();
 		}
-		
+
 	}
 }

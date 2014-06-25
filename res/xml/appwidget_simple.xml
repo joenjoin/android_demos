@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- home screen 每格的宽度为72dp -->
 <appwidget-provider xmlns:android="http://schemas.android.com/apk/res/android" 
     android:initialLayout="@layout/appwidget_simple"
     android:previewImage="@drawable/ic_launcher"
     android:updatePeriodMillis="0"
     android:widgetCategory="home_screen"
     android:minWidth="150dip"
-    android:minHeight="70dip"
+    android:minHeight="150dip"
+    android:configure="org.youdian.android_demos.appwidget.ConfigActivity"
     >
     
 

@@ -81,7 +81,14 @@
         </service>
         <activity 
             android:name="org.youdian.android_demos.appwidget.MainActivity"
-            ></activity>
+            />
+        <activity 
+            android:name="org.youdian.android_demos.appwidget.ConfigActivity"
+            >
+            <intent-filter >
+                <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE"/>
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>
