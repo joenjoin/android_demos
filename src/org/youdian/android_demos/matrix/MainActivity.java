@@ -40,7 +40,7 @@ public class MainActivity extends Activity implements OnClickListener {
 		// TODO Auto-generated method stub
 		Matrix matrix = null;
 		if (!changed)
-			matrix = applyMatrix();
+			matrix = polyToPolyMatrix();
 		else
 			matrix = clearmatrix();
 		changed = !changed;
@@ -78,8 +78,28 @@ public class MainActivity extends Activity implements OnClickListener {
 		matrix.setScale(-1, 1);
 		matrix.postTranslate(iv.getWidth(), 0);
 		/*
-		 * 方法二 matrix.setTranslate(iv.getWidth(),0); matrix.preScale(-1,1);
+		 * 方法二 
+		 * 
+		 * matrix.setTranslate(iv.getWidth(),0); 
+		 * matrix.preScale(-1,1);
 		 */
+		return matrix;
+	}
+	/*
+	 * setPolyToPoly src中点的数量对应的变换效果
+	 * 使用1 个点 （偏移变换） 2个点（旋转/缩放） ，3个点（旋转/剪切），4个点（透视变换）
+	 */
+	private Matrix polyToPolyMatrix(){
+		Matrix matrix=new Matrix();
+		/*
+		 * 一个点是平移变换
+		 *float[] src={0,0};
+		 *float[] dst={50,0};
+		 */
+		float[] src={50,50,10,10};
+		float[] dst={25,25,5,5};
+		matrix.setPolyToPoly(src, 0, dst, 0, src.length>>1);
+		System.out.println(matrix);
 		return matrix;
 	}
 }
