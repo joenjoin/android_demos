@@ -93,9 +93,9 @@ public class FloatWindowManager {
 			if (bigWindowParams == null) {
 				bigWindowParams = new LayoutParams();
 				bigWindowParams.x = screenWidth / 2
-						- FloatWindowBigView.viewWidth / 2;
+						- 300 / 2;
 				bigWindowParams.y = screenHeight / 2
-						- FloatWindowBigView.viewHeight / 2;
+						- 300 / 2;
 				bigWindowParams.type = LayoutParams.TYPE_PHONE;
 				bigWindowParams.flags = LayoutParams.FLAG_NOT_TOUCH_MODAL
 						| LayoutParams.FLAG_WATCH_OUTSIDE_TOUCH;

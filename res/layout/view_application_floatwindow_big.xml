@@ -1,15 +1,56 @@
 <?xml version="1.0" encoding="utf-8"?>
 <org.youdian.android_demos.application.FloatWindowBigView  xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/bigView"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_width="300dip"
+    android:layout_height="300dip"
     >
-<ImageButton 
-    android:id="@+id/bigImage"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:background="@drawable/small_ball"
-    android:scaleType="centerCrop"
-    />       
+
+  <ImageButton 
+      android:id="@+id/b1"
+      style="@style/view_circlelayout_child"
+      android:src="@drawable/view_circlelayout_001"
+      />  
+  <ImageButton 
+      android:id="@+id/b2"
+      style="@style/view_circlelayout_child"
+      android:src="@drawable/view_circlelayout_002"
+      />  
+  <ImageButton 
+      android:id="@+id/b3"
+      style="@style/view_circlelayout_child"
+      android:src="@drawable/view_circlelayout_003"
+      />  
+  <ImageButton 
+      android:id="@+id/b4"
+      style="@style/view_circlelayout_child"
+      android:src="@drawable/view_circlelayout_004"
+      />  
+  <ImageButton 
+      android:id="@+id/b5"
+      style="@style/view_circlelayout_child"
+      android:src="@drawable/view_circlelayout_005"
+      />  
+  <ImageButton 
+      android:id="@+id/b6"
+      style="@style/view_circlelayout_child"
+      android:src="@drawable/view_circlelayout_006"
+      />  
+     <!-- centered round button -->
+  <ImageButton 
+      android:id="@+id/b7"
+      style="@style/view_circlelayout_child_centered"
+      android:src="@drawable/view_circlelayout_007"
+      />  
+     <!--  two small button on the small circle -->
+    <ImageButton 
+      android:id="@+id/b8"
+      style="@style/view_circlelayout_child_small"
+      android:src="@drawable/view_circlelayout_007"
+      />
+      <ImageButton 
+      android:id="@+id/b9"
+      style="@style/view_circlelayout_child_small"
+      android:src="@drawable/view_circlelayout_007"
+      />       
 
 </org.youdian.android_demos.application.FloatWindowBigView>
