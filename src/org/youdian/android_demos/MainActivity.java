@@ -17,7 +17,8 @@ public class MainActivity extends ActionBarActivity {
 
 	public void clicked(View v) {
 		switch (v.getId()) {
-
+		default:
+			v.offsetLeftAndRight(20);
 		}
 	}
 

@@ -1,6 +1,7 @@
 package org.youdian.android_demos.view;
 
 import org.youdian.android_demos.R;
+
 import android.annotation.SuppressLint;
 import android.content.ClipData;
 import android.content.ClipDescription;
@@ -15,10 +16,8 @@ import android.view.DragEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.View.OnLongClickListener;
-import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
-import android.widget.LinearLayout;
 import android.widget.Toast;
 
 public class CircleLayout extends FrameLayout implements OnClickListener,

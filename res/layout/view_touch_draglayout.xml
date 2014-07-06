@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<org.youdian.android_demos.touch.DragLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+<TextView 
+    android:id="@+id/child1"
+    android:layout_width="100dp"
+    android:layout_height="100dp"
+    android:background="@color/brown"
+    android:text="Drag me"
+    />    
+<TextView 
+    android:id="@+id/child2"
+    android:layout_width="match_parent"
+    android:layout_height="0dp"
+    android:layout_weight="1"
+    android:background="@color/blue"
+    android:text=" No Moving"
+    />    
+</org.youdian.android_demos.touch.DragLayout>

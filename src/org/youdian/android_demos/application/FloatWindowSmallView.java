@@ -2,23 +2,14 @@ package org.youdian.android_demos.application;
 
 import java.lang.reflect.Field;
 
-import org.youdian.android_demos.R;
-
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.MotionEvent;
-import android.view.View;
 import android.view.WindowManager;
-import android.view.animation.LinearInterpolator;
-import android.widget.ImageButton;
 import android.widget.LinearLayout;
-import android.widget.Scroller;
-import android.widget.Toast;
 
 public class FloatWindowSmallView extends LinearLayout {
 

@@ -14,27 +14,22 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.view.DragEvent;
 import android.view.KeyEvent;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.DragShadowBuilder;
-import android.view.View.MeasureSpec;
-import android.view.View.OnDragListener;
+import android.view.View.OnClickListener;
 import android.view.View.OnLongClickListener;
-import android.view.ViewGroup.MarginLayoutParams;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.Toast;
-import android.widget.FrameLayout.LayoutParams;
-import android.view.View.OnClickListener;
+
 public class FloatWindowBigView extends FrameLayout implements OnClickListener,
-	OnLongClickListener{
+		OnLongClickListener {
 
 	private static final int CHILD_COUNT = 7;
 	public static final String TAG = "CircleLayout";
 	ImageButton b1, b2, b3, b4, b5, b6, b7, b8, b9;
-	
+
 	private FloatWindowManager mFloatWindowManager;
-	
+
 	public FloatWindowBigView(Context context, AttributeSet attrs, int defStyle) {
 		this(context, attrs);
 		// TODO Auto-generated constructor stub
@@ -43,7 +38,7 @@ public class FloatWindowBigView extends FrameLayout implements OnClickListener,
 	public FloatWindowBigView(Context context, AttributeSet attrs) {
 		super(context, attrs);
 		setWillNotDraw(false);
-		mFloatWindowManager=FloatWindowManager.getInstance();
+		mFloatWindowManager = FloatWindowManager.getInstance();
 		// TODO Auto-generated constructor stub
 	}
 
@@ -319,13 +314,12 @@ public class FloatWindowBigView extends FrameLayout implements OnClickListener,
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 		// TODO Auto-generated method stub
-		if(keyCode==KeyEvent.KEYCODE_BACK){
+		if (keyCode == KeyEvent.KEYCODE_BACK) {
 			mFloatWindowManager.removeBigWindow(getContext());
 			mFloatWindowManager.createSmallWindow(getContext());
 		}
-			
+
 		return super.onKeyDown(keyCode, event);
 	}
-	
-	
+
 }

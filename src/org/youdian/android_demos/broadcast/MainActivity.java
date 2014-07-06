@@ -15,12 +15,13 @@ public class MainActivity extends Activity {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main_button);
-		Log.d(GlobalReceiver.TAG, "thread in activity="+Thread.currentThread());
+		Log.d(GlobalReceiver.TAG,
+				"thread in activity=" + Thread.currentThread());
 	}
 
-	public void onClick(View v){
-		int id=v.getId();
-		switch(id){
+	public void onClick(View v) {
+		int id = v.getId();
+		switch (id) {
 		case R.id.button1:
 			sendGlobalBroadcast();
 			break;
@@ -28,12 +29,14 @@ public class MainActivity extends Activity {
 			break;
 		}
 	}
+
 	/*
-	 * 如果BroadcastReceiver声明了自定义权限，那么BroadcastReceiver所在应用需要声明<uses-permission/>和<permission/>，发送者需声明<uses-permission/>
+	 * 如果BroadcastReceiver声明了自定义权限，那么BroadcastReceiver所在应用需要声明<uses-permission/>和
+	 * <permission/>，发送者需声明<uses-permission/>
 	 */
 	private void sendGlobalBroadcast() {
 		// TODO Auto-generated method stub
-		Intent intent=new Intent(GlobalReceiver.GLOBAL_ACTION);
-		sendBroadcast(intent,"org.youdian.android_demos.GLOBAL_PERMISSION");
+		Intent intent = new Intent(GlobalReceiver.GLOBAL_ACTION);
+		sendBroadcast(intent, "org.youdian.android_demos.GLOBAL_PERMISSION");
 	}
 }

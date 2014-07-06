@@ -92,10 +92,8 @@ public class FloatWindowManager {
 					R.layout.view_application_floatwindow_big, null);
 			if (bigWindowParams == null) {
 				bigWindowParams = new LayoutParams();
-				bigWindowParams.x = screenWidth / 2
-						- 300 / 2;
-				bigWindowParams.y = screenHeight / 2
-						- 300 / 2;
+				bigWindowParams.x = screenWidth / 2 - 300 / 2;
+				bigWindowParams.y = screenHeight / 2 - 300 / 2;
 				bigWindowParams.type = LayoutParams.TYPE_PHONE;
 				bigWindowParams.flags = LayoutParams.FLAG_NOT_TOUCH_MODAL
 						| LayoutParams.FLAG_WATCH_OUTSIDE_TOUCH;
