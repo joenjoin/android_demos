@@ -3,6 +3,8 @@ package org.youdian.android_demos.touch;
 import org.youdian.android_demos.R;
 
 import android.content.Context;
+import android.support.v4.view.MotionEventCompat;
+import android.support.v4.view.ViewCompat;
 import android.support.v4.widget.ViewDragHelper;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -117,9 +119,16 @@ public class DragLayout extends LinearLayout {
 			log("onViewReleased");
 			// super.onViewReleased(releasedChild, xvel, yvel);
 			mDragHelper.settleCapturedViewAt(0, 0);
-			requestLayout();
+			invalidate();
 		}
 
+	}
+	
+	@Override
+	public void computeScroll() {
+		// TODO Auto-generated method stub
+		if(mDragHelper.continueSettling(true))
+			ViewCompat.postInvalidateOnAnimation(this);
 	}
 
 	@Override
@@ -132,6 +141,11 @@ public class DragLayout extends LinearLayout {
 	@Override
 	public boolean onInterceptTouchEvent(MotionEvent ev) {
 		// TODO Auto-generated method stub
+		final int action=MotionEventCompat.getActionMasked(ev);
+		if (action == MotionEvent.ACTION_CANCEL || action == MotionEvent.ACTION_UP) {
+	            mDragHelper.cancel();
+	            return false;
+	    }
 		return mDragHelper.shouldInterceptTouchEvent(ev);
 	}
 
