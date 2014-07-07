@@ -16,7 +16,7 @@ public class DragLayout extends LinearLayout {
 	private static final String TAG = "DragLayout";
 	ViewDragHelper mDragHelper;
 	View mChild;
-
+	View mChild2;
 	public DragLayout(Context context, AttributeSet attrs) {
 		super(context, attrs);
 		// TODO Auto-generated constructor stub
@@ -136,6 +136,17 @@ public class DragLayout extends LinearLayout {
 		// TODO Auto-generated method stub
 		super.onFinishInflate();
 		mChild = findViewById(R.id.child1);
+		mChild2=findViewById(R.id.child2);
+		mChild2.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				mChild2.offsetTopAndBottom(10);
+				log("top="+mChild2.getTop());
+				invalidate();
+			}
+		});
 	}
 
 	@Override
