@@ -23,7 +23,7 @@ public class MainActivity extends Activity {
 		int id = v.getId();
 		switch (id) {
 		case R.id.button1:
-			sendGlobalBroadcast();
+			trySendStickyBroadcast();
 			break;
 		case R.id.button2:
 			break;
@@ -34,9 +34,14 @@ public class MainActivity extends Activity {
 	 * 如果BroadcastReceiver声明了自定义权限，那么BroadcastReceiver所在应用需要声明<uses-permission/>和
 	 * <permission/>，发送者需声明<uses-permission/>
 	 */
-	private void sendGlobalBroadcast() {
+	private void trySendGlobalBroadcast() {
 		// TODO Auto-generated method stub
 		Intent intent = new Intent(GlobalReceiver.GLOBAL_ACTION);
 		sendBroadcast(intent, "org.youdian.android_demos.GLOBAL_PERMISSION");
+	}
+	
+	private void trySendStickyBroadcast(){
+		Intent intent = new Intent(GlobalReceiver.GLOBAL_ACTION);
+		sendStickyBroadcast(intent);
 	}
 }

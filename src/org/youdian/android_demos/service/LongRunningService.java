@@ -22,7 +22,7 @@ import android.util.Log;
  *  adb shell dumpsys activity|grep oom_adj   命令查看进程的优先级 ，值越低优先级越高
  */
 public class LongRunningService extends Service {
-	private static final String TAG = "LongRuningService";
+	private static final String TAG = "LongRunningService";
 	MyBinder binder;
 
 	class MyBinder extends Binder {
@@ -62,7 +62,11 @@ public class LongRunningService extends Service {
 		// TODO Auto-generated method stub
 		Log.d(TAG, "onDestroy");
 		super.onDestroy();
-
+		
+		Intent intent=new Intent();
+		intent.setClass(this, LongRunningService.class);
+		startService(intent);
+		
 	}
 
 	@Override
@@ -70,6 +74,22 @@ public class LongRunningService extends Service {
 		// TODO Auto-generated method stub
 		Log.d(TAG, "onStartCommand");
 		Log.d(TAG, "" + Thread.currentThread().getId());
+		Log.d(TAG, "startId="+startId);
+		Thread thread=new Thread(){
+
+			@Override
+			public void run() {
+				// TODO Auto-generated method stub
+				//super.run();
+				MyBinder binder=new MyBinder();
+				binder.log();
+			}
+			
+		};
+		thread.start();
+		/*
+		 * START_STICKY 当Service进程被异常终止后，如被进程管理器杀死，稍候会重新启动
+		 */
 		return START_STICKY;
 	}
 
