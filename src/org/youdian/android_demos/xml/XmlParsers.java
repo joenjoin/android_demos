@@ -36,7 +36,7 @@ import android.util.Xml;
  * 三种解析方式的优缺点
  * 1.SAX 逐行读取，节省内存，适用于固定格式的XML 效率高
  * 2.DOM 整体载入，消耗内存，适用于需要动态修改的XML 效率低
- * 3.Pull 逐行读取  效率高
+ * 3.Pull 逐行读取  效率高    android系统解析res下的资源文件即使用XmlPullParser方式
  * 
  */
 public class XmlParsers {
