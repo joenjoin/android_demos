@@ -8,6 +8,14 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteDatabase.CursorFactory;
 import android.database.sqlite.SQLiteOpenHelper;
 
+/*
+ * use transaction
+ * SQLiteDatabase db;
+ * db.beginTransaction();
+ * ... do your work
+ * db.setTransactionSuccessful();
+ * db.endTransaction();
+ */
 public class DatabaseHelper extends SQLiteOpenHelper {
 
 	public static final int STATUS_REMOVED = 0;

@@ -62,11 +62,11 @@ public class LongRunningService extends Service {
 		// TODO Auto-generated method stub
 		Log.d(TAG, "onDestroy");
 		super.onDestroy();
-		
-		Intent intent=new Intent();
+
+		Intent intent = new Intent();
 		intent.setClass(this, LongRunningService.class);
 		startService(intent);
-		
+
 	}
 
 	@Override
@@ -74,17 +74,17 @@ public class LongRunningService extends Service {
 		// TODO Auto-generated method stub
 		Log.d(TAG, "onStartCommand");
 		Log.d(TAG, "" + Thread.currentThread().getId());
-		Log.d(TAG, "startId="+startId);
-		Thread thread=new Thread(){
+		Log.d(TAG, "startId=" + startId);
+		Thread thread = new Thread() {
 
 			@Override
 			public void run() {
 				// TODO Auto-generated method stub
-				//super.run();
-				MyBinder binder=new MyBinder();
+				// super.run();
+				MyBinder binder = new MyBinder();
 				binder.log();
 			}
-			
+
 		};
 		thread.start();
 		/*

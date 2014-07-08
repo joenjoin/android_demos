@@ -39,8 +39,8 @@ public class MainActivity extends Activity {
 		Intent intent = new Intent(GlobalReceiver.GLOBAL_ACTION);
 		sendBroadcast(intent, "org.youdian.android_demos.GLOBAL_PERMISSION");
 	}
-	
-	private void trySendStickyBroadcast(){
+
+	private void trySendStickyBroadcast() {
 		Intent intent = new Intent(GlobalReceiver.GLOBAL_ACTION);
 		sendStickyBroadcast(intent);
 	}
