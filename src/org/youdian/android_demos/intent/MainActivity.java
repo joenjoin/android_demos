@@ -1,5 +1,7 @@
 package org.youdian.android_demos.intent;
 
+import org.youdian.android_demos.parcelable.Person;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;

@@ -1,4 +1,4 @@
-package org.youdian.android_demos.intent;
+package org.youdian.android_demos.parcelable;
 
 import android.os.Parcel;
 import android.os.Parcelable;
