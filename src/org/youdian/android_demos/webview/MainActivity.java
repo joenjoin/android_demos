@@ -2,17 +2,24 @@ package org.youdian.android_demos.webview;
 
 import org.youdian.android_demos.R;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.os.Bundle;
+import android.os.Handler;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Window;
+import android.webkit.JsResult;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.Toast;
 
 public class MainActivity extends Activity {
+	private static final String TAG="WebView";
 	WebView web;
-
+	private Handler mHandler=new Handler();
+	@SuppressLint("JavascriptInterface")
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -40,8 +47,28 @@ public class MainActivity extends Activity {
 				MainActivity.this.setProgress(newProgress * 1000);
 			}
 
+			@Override
+			public boolean onJsAlert(WebView view, String url, String message,
+					JsResult result) {
+				// TODO Auto-generated method stub
+				Log.d(TAG, "message="+message);
+				return true;
+			}
+			
+
 		});
-		web.loadUrl(url);
+		web.loadUrl("file:///android_asset/demo.html");
+		/*
+		web.addJavascriptInterface(new Object() {       
+            public void clickOnAndroid() {       
+                mHandler.post(new Runnable() {       
+                    public void run() {       
+                        web.loadUrl("javascript:alert('hello world')");       
+                    }       
+                });       
+            }       
+        }, "demo");  */
+		web.addJavascriptInterface(new JsInterface(), "toast");
 	}
 
 	@Override
@@ -51,7 +78,14 @@ public class MainActivity extends Activity {
 			web.goBack();
 			return true;
 		}
-		return false;
+		return super.onKeyDown(keyCode, event);
+	}
+	
+	private class JsInterface{
+		public void showToast(){
+			System.out.println("hello Toast");
+			Toast.makeText(MainActivity.this, "toast", Toast.LENGTH_LONG).show();
+		}
 	}
 
 }
