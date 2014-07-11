@@ -52,7 +52,8 @@ public class MainActivity extends Activity {
 					JsResult result) {
 				// TODO Auto-generated method stub
 				Log.d(TAG, "message="+message);
-				return true;
+				//return true;
+				return false;
 			}
 			
 
@@ -85,6 +86,14 @@ public class MainActivity extends Activity {
 		public void showToast(){
 			System.out.println("hello Toast");
 			Toast.makeText(MainActivity.this, "toast", Toast.LENGTH_LONG).show();
+		}
+		
+		public void printText(String message){
+			System.out.println("Message ="+message);
+		}
+		//调用js函数
+		public void invokeJs(){
+			web.loadUrl("javascript:sayHello()");
 		}
 	}
 
